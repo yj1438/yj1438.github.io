@@ -12,12 +12,7 @@ figure{
 .fr{
     float: right;
 }
-.main {
-    position: relative;
-    min-width: 320px;
-    max-width: 1160px;
-    margin: 0 auto;
-}
+
 
 .abstract{
     background: hsl(45,50%,98%);
