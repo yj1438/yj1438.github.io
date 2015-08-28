@@ -142,7 +142,14 @@ figure{
 #masonry:hover img:hover {
     opacity: 1;
 }
-
+@media only screen and (max-width: 500px){
+    #masonry {
+        height: 250vw;
+    }
+    #masonry img {
+        width: 50%;
+    }
+}
 /*========Grid Layout by Flexbox===============================*/
 
 #got-gridbox {
