@@ -1,4 +1,3 @@
-highlighter: pygments
 github: {
     "version": {},
     "author": "yinjie",
@@ -9,7 +8,23 @@ source: ./
 destination: ./_site
 plugins: ./_plugins
 safe: true
+
+# Conversion
+#markdown: kramdown
+#markdown: kramdown
+highlighter: pygments
+markdown: rdiscount
+#redcarpet:
+#    extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 lsi: false
-#baseurl: 
-markdown: Kramdown
+excerpt_separator: "\n\n\n\n"
+incremental: false
+
+# Serving
+detach: false
+port: 4000
+host: 127.0.0.1
+baseurl: "" # does not include hostname
+
+encoding: "utf-8"
 markdown_ext: markdown,mkd,mkdn,md
