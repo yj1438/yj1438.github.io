@@ -127,10 +127,9 @@ Theme Styles
 
 .mainpage {
     box-sizing: border-box;
-    color: #373737;
-    background: #212121;
+    color: #181818
     font-size: 16px;
-    font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -148,13 +147,13 @@ h1 {
     font-size: 36px;
 }
 h2 {
-    font-size: 32px;
+    font-size: 30px;
 }
 h3 {
     font-size: 24px;
 }
 h4 {
-    font-size: 21px;
+    font-size: 20px;
 }
 h5 {
     font-size: 18px;
@@ -188,8 +187,10 @@ a {
     -ms-transition: text-shadow 0.5s ease;
 }
 a:hover,
-a:focus {
-    text-decoration: underline;
+a:focus,
+a:visited,
+a:link{
+    text-decoration: none;
 }
 footer a {
     color: #F2F2F2;
@@ -219,14 +220,36 @@ img {
 }
 */
 
+p, li{
+    font-family: 'Microsoft Yahei', 'Lantinghei SC';
+    line-height: 28px;
+    font-size: 16px;
+    text-indent: 2em;
+    margin: 8px 0;
+}
 p img {
+/*
     display: inline;
-    margin: 0;
+    margin: 10px 0;
     padding: 0;
     vertical-align: middle;
     text-align: center;
     border: none;
-    max-width: 100%;
+    max-width: 640px;
+    width: 100%;
+*/
+    display: inline;
+    margin: 8px auto;
+    padding: 0;
+    vertical-align: middle;
+    /* text-align: center; */
+    /* border: none; */
+    max-width: 640px;
+    width: 100%;
+    display: block;
+}
+li p, li{
+    text-indent: 0;
 }
 pre {
     border: 1px solid #eee;
@@ -350,8 +373,9 @@ Full-Width Styles
 }
 .inner {
     position: relative;
-    max-width: 640px;
     padding: 20px 10px;
+    min-width: 320px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 #forkme_banner {
@@ -460,16 +484,20 @@ Full-Width Styles
     }
 }
 
-@media screen and (min-width: 960px) and (max-width: 1360px) {}
-@media screen and (min-width: 480px) and (max-width: 959px) {}
-@media screen and (max-width: 479px) {
+@media screen and (min-width: 1377px) {
+    
+}
+@media screen and (min-width: 1025px) and (max-width: 1376px) {
+    
+}
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+   
+}
+@media screen and (max-width: 480px) {
     #downloads {
         display: none;
     }
-    .inner {
-        min-width: 320px;
-        max-width: 480px;
-    }
+    
     #project_title {
         font-size: 32px;
     }
