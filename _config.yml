@@ -1,0 +1,7 @@
+source: ./_page
+destination: ./_site
+plugins: ./_plugins
+#baseurl: 
+#highlighter: pygments
+markdown: Kramdown
+markdown_ext: markdown,mkd,mkdn,md
