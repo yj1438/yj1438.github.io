@@ -5,8 +5,14 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Yinjie - GitHub.io : Yinjie - GitHub.io">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
     <title>HTTP/2</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
+    <link rel="stylesheet" href="/css/github-gist.css">
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="/js/jquery-1.11.3.js"></script>
+        <script src="/js/highlight.pack.js"></script>
 </head>
 
 <body class="mainpage">
@@ -103,11 +109,11 @@
 
 <p>国外的：<a href="http://www.startssl.com/">StartSSL™ Certificates &amp; Public Key Infrastructure</a></p>
 
-<pre><code class="``js">  function fancyAlert(arg) {
-      if(arg) {
+<pre><code class="js">function fancyAlert(arg) {
+    if(arg) {
         $.facebox({div:'#foo'})
-      }   
-  }
+    }   
+}
 </code></pre>
 
         </section>
@@ -120,7 +126,14 @@
         </footer>
     </div>
 
-
+<script>
+    hljs.initHighlightingOnLoad({useBR: true});
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
 
 </body>
 
