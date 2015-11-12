@@ -1,7 +1,15 @@
-source: ./_page
+highlighter: pygments
+github: {
+    "version": {},
+    "author": "yinjie",
+    "hostname": "https://github.com/yj1438/",
+    "pages_hostname": "http://yj1438.github.io/"
+}
+source: ./
 destination: ./_site
 plugins: ./_plugins
+safe: true
+lsi: false
 #baseurl: 
-#highlighter: pygments
 markdown: Kramdown
 markdown_ext: markdown,mkd,mkdn,md
