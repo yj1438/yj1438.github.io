@@ -226,6 +226,7 @@ p img {
     vertical-align: middle;
     text-align: center;
     border: none;
+    max-width: 100%;
 }
 pre {
     border: 1px solid #eee;
