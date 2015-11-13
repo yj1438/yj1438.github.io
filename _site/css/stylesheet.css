@@ -484,6 +484,12 @@ Full-Width Styles
     }
 }
 
+@media screen and (max-width: 639px) {
+    .inner .date {
+        display: none;
+    }
+}
+
 @media screen and (min-width: 1377px) {
     
 }
