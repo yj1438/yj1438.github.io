@@ -95,6 +95,7 @@ video {
 body {
     background: #fafafa;
     font-size: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -131,7 +132,6 @@ Theme Styles
     font-size: 16px;
     font-family: Helvetica, Arial, sans-serif;
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
 }
 h1,
 h2,

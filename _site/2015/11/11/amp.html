@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh">
-
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Yinjie - GitHub.io : Yinjie - GitHub.io">
-    <title>AMP （Accelerated Mobile Pages）</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/stylesheet.css">
-    <link rel="stylesheet" href="/css/github-gist.css">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>AMP （Accelerated Mobile Pages）</title>
+        <link rel="stylesheet" href="/css/stylesheet.css" media="screen">
+        <link rel="stylesheet" href="/css/flexbox.css">
+        <link rel="stylesheet" href="/css/github-gist.css">
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="/js/jquery-1.11.3.js"></script>
         <script src="/js/highlight.pack.js"></script>
-</head>
-
-<body class="mainpage">
-
-    <!-- HEADER -->
+    </head>
+    <body>
+        <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
             <a id="forkme_banner" href="https://github.com/yj1438">View on GitHub</a>
@@ -27,10 +25,20 @@
 
         </header>
     </div>
+        
+    <div id="content-wrapper">
+        <div class="main clearfix">
+            <aside id="sidebar">
+                <ul class="side-nav">
+<!--
+                    <li><a href="#anchor1">制作漫画</a></li>
+                    <li><a href="#anchor2">总结</a></li>
+-->
+                </ul>
+            </aside>
 
-    <div id="main_content_wrap" class="outer">
-        <section id="main_content" class="inner">
-            <h1>AMP</h1>
+            <section id="main-cont">
+                <h1>AMP</h1>
 
 <h2>什么是 AMP</h2>
 
@@ -69,73 +77,73 @@
 <table>
 <thead>
 <tr>
-<th> Tag       </th>
-<th> Status in AMP HTML                             </th>
+<th> 原生标签       </th>
+<th>  AMP HTML 中的标签                          </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td> script    </td>
-<td> Prohibited unless the type is <code>application/ld+json</code> (Other non-executable values may be added as needed.). Exception is the mandatory script tag to load the AMP runtime and the script tags to load extended components. </td>
+<td> 除了类型是<code>application/ld+json</code>的 script 标签都被建议禁止使用。当然，AMP Runtime 和 AMP 扩展组件所需要的 JS 还是需要加载的</td>
 </tr>
 <tr>
 <td> base      </td>
-<td> Prohibited </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> img       </td>
-<td> Replaced with amp-img </td>
+<td> amp-img </td>
 </tr>
 <tr>
 <td> video     </td>
-<td> Replaced with amp-video </td>
+<td> amp-video </td>
 </tr>
 <tr>
 <td> audio     </td>
-<td> Replaced with amp-audio </td>
+<td> amp-audio </td>
 </tr>
 <tr>
 <td> iframe    </td>
-<td> Replaced with amp-iframe </td>
+<td> amp-iframe </td>
 </tr>
 <tr>
 <td> frame     </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> frameset  </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> object    </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> param     </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> applet    </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> embed     </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> form      </td>
-<td> Prohibited. </td>
+<td> 禁止 </td>
 </tr>
 <tr>
 <td> input elements </td>
-<td> Prohibited. Includes input, textarea, select, option. Notably, button element is allowed. </td>
+<td> 禁止。 <code>type="button"</code> 的可以被使用 </td>
 </tr>
 <tr>
 <td> button    </td>
-<td> Allowed. </td>
+<td> 允许 </td>
 </tr>
 <tr>
-<td> <a name="cust"></a>style     </td>
+<td> style     </td>
 <td> <a href="#opacity">Required style tags for adjusting opacity</a> One additional style tag is allowed in head tag for the purpose of custom styling. This style tag must have the attribute <code>amp-custom</code>. <a href="#cust">🔗</a> </td>
 </tr>
 <tr>
@@ -147,7 +155,7 @@
 <td> The <code>http-equiv</code> attribute is banned. Otherwise allowed. </td>
 </tr>
 <tr>
-<td> <a name="ancr"></a>a         </td>
+<td> a         </td>
 <td> The <code>href</code> attribute value must not begin with <code>javascript:</code>. If set, the <code>target</code> attribute value must be <code>_blank</code>. Otherwise allowed. <a href="#ancr">🔗</a> </td>
 </tr>
 <tr>
@@ -170,25 +178,24 @@
 
 <p>用来替换 <code>&lt;img&gt;</code> 、<code>&lt;video&gt;</code> 等标签，从页优化对资源的加载策略，</p>
 
-        </section>
+            </section>
+        </div>
     </div>
-
+        
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
         <footer class="inner">
             <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
         </footer>
     </div>
-
-<script>
-    hljs.initHighlightingOnLoad({useBR: true});
-    $(document).ready(function() {
-        $('pre code').each(function(i, block) {
-            hljs.highlightBlock(block);
+    <script src="/js/aside-nav.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad({useBR: true});
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
         });
-    });
-</script>
-
-</body>
-
+    </script>
+    </body>
 </html>
