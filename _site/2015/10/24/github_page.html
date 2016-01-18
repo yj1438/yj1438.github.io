@@ -38,7 +38,101 @@
             </aside>
 
             <section id="main-cont">
-                
+                <h1>用 github + jekyll 搭建个人站点</h1>
+
+<blockquote><p>在 GITHUB 上搭建个人技术站点</p></blockquote>
+
+<h2>github IO repositorie</h2>
+
+<h2>本地 jekyll 安装及设置</h2>
+
+<h3>clone github IO 站点项目到本地</h3>
+
+<h3>*gem sources</h3>
+
+<p>gem sources</p>
+
+<p>gem sources -a https://ruby.taobao.org</p>
+
+<p>gem sources -r <strong><em>url</em></strong></p>
+
+<h3>安装bundle</h3>
+
+<p>gem install bundler</p>
+
+<h3>安装jekyll (github-pages)</h3>
+
+<ul>
+<li><p>在本地的 github IO 项目下新建 Gemfile 文件，添加 <code>gem 'github-pages'</code> ，然后执行 <code>bundle install</code></p></li>
+<li><p>在本地的 github IO 项目下新建 Gemfile 文件，内容如下</p></li>
+</ul>
+
+
+<pre><code>source 'https://ruby.taobao.org'
+gem 'github-pages'
+</code></pre>
+
+<p>再执行 <code>gem install github-pages</code></p>
+
+<h3>jekyll 配置</h3>
+
+<p>在本地的 github IO 项目下新建 _config.yml 文件，内容如下：</p>
+
+<pre><code>github: {
+    "version": {},
+    "author": "yinjie",
+    "hostname": "https://github.com/yj1438/",
+    "pages_hostname": "http://yj1438.github.io/"
+}
+source: ./
+destination: ./_site
+plugins: ./_plugins
+safe: true
+
+# Conversion
+#markdown: kramdown
+highlighter: pygments
+markdown: rdiscount
+rdiscount:
+   extensions:
+     - footnotes
+lsi: false
+excerpt_separator: "\n\n\n\n"
+incremental: false
+
+# Serving
+detach: false
+port: 4000
+host: 127.0.0.1
+baseurl: "" # does not include hostname
+
+encoding: "utf-8"
+markdown_ext: markdown,mkd,mkdn,md
+</code></pre>
+
+<p>官方给出的默认配置与网上许多配置都会在翻译 Markdown 语法时出各种情况，
+以上配置是个人尝试后给出的最靠谱配置，尤其对 Markdown 中的代码样式翻译的最好，
+加上 highlight.js 和 gist.css, 所呈现出来的各类语言的样式都很优秀</p>
+
+<h3>启动 jekyll</h3>
+
+<p>bundle exec jekyll serve</p>
+
+<h2>jekyll 基本使用方法</h2>
+
+<h2>LESS 插件使用</h2>
+
+<p>每个 LESS 文件前面必须添加空 YAML font matter</p>
+
+<p>安装<code>gem install less</code></p>
+
+<pre><code>---
+---
+</code></pre>
+
+<p>github 下不支持自定义插件，可以在编写的时候用 less-watch 及时转译 less 文件</p>
+
+<h2></h2>
 
             </section>
         </div>
