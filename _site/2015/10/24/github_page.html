@@ -44,23 +44,47 @@
 
 <h2>github IO repositorie</h2>
 
+<p>首先你得有个 github 的 IO 站点，这个在 <a href="https://pages.github.com/">github page</a> 里有详情的说明，我这大概的总结一下</p>
+
+<ol>
+<li>建立一个名称如 yourname.github.io 的 repositorie</li>
+<li>在项目 settings 中，生成 Github Pages</li>
+<li>系统会自动生成一个纯静态的站点目录结构，以及初始化的一些样式文件和首页</li>
+<li>把这个 repositorie clone 到本地，随便在主页上修改一些东西，push 上去你就会在 <code>yourname.github.io</code> 上看到结果了 ^0^</li>
+</ol>
+
+
 <h2>本地 jekyll 安装及设置</h2>
 
-<h3>clone github IO 站点项目到本地</h3>
+<p><a href="http://jekyllrb.com/">jekyll</a>是一个非常好用在静态站点生成器，完善模板功能和丰富的插件，还支持各类文档语言。</p>
+
+<p>github 对 jekyll 提供原生的支持，非常好用。</p>
 
 <h3>*gem sources</h3>
 
-<p>gem sources</p>
+<p>天朝的网络目前无法访问默认的 gem sources，好在万能的淘宝镜像了一个，提供给大家。</p>
 
-<p>gem sources -a https://ruby.taobao.org</p>
+<p>执行如下命令，添加 taobao source 进去，再把第一行命令所看到的默认 sources URL 删除掉。</p>
 
-<p>gem sources -r <strong><em>url</em></strong></p>
+<pre><code>gem sources         #这里会看到一个默认的 url ，设为___url___
+gem sources -a https://ruby.taobao.org
+gem sources -r ___url___
+</code></pre>
 
 <h3>安装bundle</h3>
 
-<p>gem install bundler</p>
+<p>直接</p>
+
+<pre><code>gem install bundler
+</code></pre>
 
 <h3>安装jekyll (github-pages)</h3>
+
+<p>在本地的 github IO repositorie 里安装 jekyll Github 也给出了<a href="https://help.github.com/articles/using-jekyll-with-pages/">详情的说明</a>。在此也为不愿看洋文的朋友们大致说一下步骤。</p>
+
+<p><strong>首先要进入你之前 clone 到本地的 IO repositorie 目录里</strong></p>
+
+<p>现在开始安装 jekyll，安装这个有两种方法，都不麻烦，大家可以选择其一。</p>
 
 <ul>
 <li><p>在本地的 github IO 项目下新建 Gemfile 文件，添加 <code>gem 'github-pages'</code> ，然后执行 <code>bundle install</code></p></li>
@@ -80,7 +104,7 @@ gem 'github-pages'
 
 <pre><code>github: {
     "version": {},
-    "author": "yinjie",
+    "author": "yj1438",
     "hostname": "https://github.com/yj1438/",
     "pages_hostname": "http://yj1438.github.io/"
 }
@@ -116,23 +140,30 @@ markdown_ext: markdown,mkd,mkdn,md
 
 <h3>启动 jekyll</h3>
 
-<p>bundle exec jekyll serve</p>
+<pre><code>bundle exec jekyll serve
+</code></pre>
+
+<p>如果没有指定端口的话，打开<code>127.0.0.1:4000</code>就可以看到你发布的站点了。</p>
+
+<p>本地写完了 push 到 github 上，过几分种就可以看到和本地一模一样的结果了^_^。</p>
 
 <h2>jekyll 基本使用方法</h2>
 
-<h2>LESS 插件使用</h2>
+<p>呃，，，这个可以写本书了，在此就不说了。大家可去 <a href="http://jekyllrb.com/">jekyll 官网看</a>。</p>
 
-<p>每个 LESS 文件前面必须添加空 YAML font matter</p>
+<h2>less 插件使用</h2>
 
-<p>安装<code>gem install less</code></p>
+<p>首先要说一下 github 下不支持自定义插件，可以在编写的时候用 less-watch 及时转译 less 文件。但在非 github page 的情况下使用 jekyll 时，有 less 的帮助还是很方便的。</p>
+
+<p>这里提供一个 jekyll 官方推荐的 <a href="https://gist.github.com/jasongraham/639920">less 插件</a>;</p>
+
+<p>一定注意，每个 LESS 文件前面必须添加空 <strong>YAML font matter</strong>，这样 jekyll 才能自动识别需要构建的 less 文件</p>
 
 <pre><code>---
 ---
 </code></pre>
 
-<p>github 下不支持自定义插件，可以在编写的时候用 less-watch 及时转译 less 文件</p>
-
-<h2></h2>
+<p>别忘了安装<code>gem install less</code></p>
 
             </section>
         </div>
