@@ -90,6 +90,7 @@
 div#masonry img {
     width: 33.3%;
     transition: .8s opacity;
+    max-height: 0; //chrome v48 会有 flex 下 img 的 height 不能按比例放缩的 BUG
 }
 
 div#masonry:hover img {

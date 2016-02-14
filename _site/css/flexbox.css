@@ -137,6 +137,7 @@ figure{
 }
 #masonry img {
     width: 33.3%;
+    min-height: 0;
     transition: .8s opacity;
 }
 
