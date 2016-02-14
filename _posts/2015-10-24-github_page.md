@@ -39,9 +39,9 @@ gem sources -r ___url___
 
 直接
 
-```
+~~~
 gem install bundler
-```
+~~~
 
 ### 安装jekyll (github-pages)
 
@@ -55,10 +55,10 @@ gem install bundler
 
 * 在本地的 github IO 项目下新建 Gemfile 文件，内容如下
 
-```
+~~~
 source 'https://ruby.taobao.org'
 gem 'github-pages'
-```
+~~~
 
 再执行 `gem install github-pages`
 
@@ -66,7 +66,7 @@ gem 'github-pages'
 
 在本地的 github IO 项目下新建 _config.yml 文件，内容如下：
 
-```
+~~~
 github: {
     "version": {},
     "author": "yj1438",
@@ -98,7 +98,7 @@ baseurl: "" # does not include hostname
 encoding: "utf-8"
 markdown_ext: markdown,mkd,mkdn,md
 
-```
+~~~
 
 官方给出的默认配置与网上许多配置都会在翻译 Markdown 语法时出各种情况，
 以上配置是个人尝试后给出的最靠谱配置，尤其对 Markdown 中的代码样式翻译的最好，
@@ -106,9 +106,9 @@ markdown_ext: markdown,mkd,mkdn,md
 
 ### 启动 jekyll
 
-```
+~~~
 bundle exec jekyll serve
-```
+~~~
 
 如果没有指定端口的话，打开`127.0.0.1:4000`就可以看到你发布的站点了。
 
@@ -125,9 +125,10 @@ bundle exec jekyll serve
 这里提供一个 jekyll 官方推荐的 [less 插件](https://gist.github.com/jasongraham/639920);
 
 一定注意，每个 LESS 文件前面必须添加空 **YAML font matter**，这样 jekyll 才能自动识别需要构建的 less 文件
-```
+
+~~~
 ---
 ---
-```
+~~~
 
 别忘了安装`gem install less`

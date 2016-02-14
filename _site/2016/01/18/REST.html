@@ -118,8 +118,7 @@
 
 <p><strong>特此给出 <a href="https://api.github.com/">github API</a> 大家感受一下</strong></p>
 
-<p><code>json
-{
+<pre><code class="language-json">{
     current_user_url: "https://api.github.com/user",
     current_user_authorizations_html_url: "https://github.com/settings/connections/applications{/client_id}",
     authorizations_url: "https://api.github.com/authorizations",
@@ -151,8 +150,9 @@
     user_repositories_url: "https://api.github.com/users/{user}/repos{?type,page,per_page,sort}",
     user_search_url: "https://api.github.com/search/users?q={query}{&amp;page,per_page,sort,order}"
 }
-</code>
-## RESTful HTTP method</p>
+</code></pre>
+
+<h2 id="restful-http-method">RESTful HTTP method</h2>
 
 <p><img src="/img/rest/102.jpg" alt="图三" /></p>
 
@@ -208,8 +208,7 @@
 
 <p>非简单请求的跨域浏览器会有一个预请求的动作，先发出一个 OPTIONS 的请求。对所跨域的站点进行访问权限的试探。</p>
 
-<p><code>
-OPTIONS /resources/post-here/ HTTP/1.1
+<pre><code>OPTIONS /resources/post-here/ HTTP/1.1
 Host: bbb.com
 User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1b3pre) Gecko/20081130 Minefield/3.1b3pre
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -218,7 +217,7 @@ Accept-Encoding: gzip,deflate
 Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
 Connection: keep-alive
 Origin: http://aaa.com
-</code></p>
+</code></pre>
 
 <p>此时，需要在服务器端进行更详情的跨域许可控制，在response 中加入以下 Header.</p>
 
@@ -236,10 +235,9 @@ Origin: http://aaa.com
 
 <p>此时要是想正常携带 cookie，需要对发起的 XMLHttpRequest 中一个标志位设置为<code>true</code>。</p>
 
-<p><code>
-var xhr = new XMLHttpRequest();
+<pre><code>var xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
-</code></p>
+</code></pre>
 
             </section>
         </div>

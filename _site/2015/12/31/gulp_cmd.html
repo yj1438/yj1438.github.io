@@ -83,8 +83,7 @@ gulp.src(js_path, {
 
 <h2 id="cmd--1">CMD 合并</h2>
 
-<p><code>javascript  
-gulp.src(DEST_JS_PATH + '/**/*.js', { read: false })
+<pre><code class="language-javascript">gulp.src(DEST_JS_PATH + '/**/*.js', { read: false })
     .pipe(cmdnice.cmdConcat({
         paths: [path.join(process.cwd(), DEST_PATH)],     //此路径为已经通过上步骤标准化后的 js 文件根目录
         include: "all",
@@ -96,7 +95,7 @@ gulp.src(DEST_JS_PATH + '/**/*.js', { read: false })
         mangle: {except: ['define', 'require', 'module', 'exports', '$']}
     }))
     .pipe(gulp.dest(DEST_PATH_JS));
-</code></p>
+</code></pre>
 
             </section>
         </div>

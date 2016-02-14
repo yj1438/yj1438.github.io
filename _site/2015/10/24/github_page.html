@@ -74,9 +74,8 @@ gem sources -r ___url___
 
 <p>直接</p>
 
-<p><code>
-gem install bundler
-</code></p>
+<pre><code>gem install bundler
+</code></pre>
 
 <h3 id="jekyll-github-pages">安装jekyll (github-pages)</h3>
 
@@ -95,10 +94,9 @@ gem install bundler
   </li>
 </ul>
 
-<p><code>
-source 'https://ruby.taobao.org'
+<pre><code>source 'https://ruby.taobao.org'
 gem 'github-pages'
-</code></p>
+</code></pre>
 
 <p>再执行 <code>gem install github-pages</code></p>
 
@@ -106,39 +104,38 @@ gem 'github-pages'
 
 <p>在本地的 github IO 项目下新建 _config.yml 文件，内容如下：</p>
 
-<p>```
-github: {
-    “version”: {},
-    “author”: “yj1438”,
-    “hostname”: “https://github.com/yj1438/”,
-    “pages_hostname”: “http://yj1438.github.io/”
+<pre><code>github: {
+    "version": {},
+    "author": "yj1438",
+    "hostname": "https://github.com/yj1438/",
+    "pages_hostname": "http://yj1438.github.io/"
 }
 source: ./
 destination: ./_site
 plugins: ./_plugins
-safe: true</p>
+safe: true
 
-<h1 id="conversion">Conversion</h1>
-<p>#markdown: kramdown
+# Conversion
+#markdown: kramdown
 highlighter: pygments
 markdown: rdiscount
 rdiscount:
    extensions:
      - footnotes
 lsi: false
-excerpt_separator: “\n\n\n\n”
-incremental: false</p>
+excerpt_separator: "\n\n\n\n"
+incremental: false
 
-<h1 id="serving">Serving</h1>
-<p>detach: false
+# Serving
+detach: false
 port: 4000
 host: 127.0.0.1
-baseurl: “” # does not include hostname</p>
+baseurl: "" # does not include hostname
 
-<p>encoding: “utf-8”
-markdown_ext: markdown,mkd,mkdn,md</p>
+encoding: "utf-8"
+markdown_ext: markdown,mkd,mkdn,md
 
-<p>```</p>
+</code></pre>
 
 <p>官方给出的默认配置与网上许多配置都会在翻译 Markdown 语法时出各种情况，
 以上配置是个人尝试后给出的最靠谱配置，尤其对 Markdown 中的代码样式翻译的最好，
@@ -146,9 +143,8 @@ markdown_ext: markdown,mkd,mkdn,md</p>
 
 <h3 id="jekyll">启动 jekyll</h3>
 
-<p><code>
-bundle exec jekyll serve
-</code></p>
+<pre><code>bundle exec jekyll serve
+</code></pre>
 
 <p>如果没有指定端口的话，打开<code>127.0.0.1:4000</code>就可以看到你发布的站点了。</p>
 
@@ -164,11 +160,11 @@ bundle exec jekyll serve
 
 <p>这里提供一个 jekyll 官方推荐的 <a href="https://gist.github.com/jasongraham/639920">less 插件</a>;</p>
 
-<p>一定注意，每个 LESS 文件前面必须添加空 <strong>YAML font matter</strong>，这样 jekyll 才能自动识别需要构建的 less 文件
-<code>
+<p>一定注意，每个 LESS 文件前面必须添加空 <strong>YAML font matter</strong>，这样 jekyll 才能自动识别需要构建的 less 文件</p>
+
+<pre><code>---
 ---
----
-</code></p>
+</code></pre>
 
 <p>别忘了安装<code>gem install less</code></p>
 
