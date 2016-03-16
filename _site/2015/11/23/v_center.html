@@ -4,7 +4,7 @@
         <meta charset='utf-8'>
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>简易 node 服务端小框架</title>
+        <title>简单的垂直居中方法</title>
         <link rel="stylesheet" href="/css/stylesheet.css" media="screen">
         <link rel="stylesheet" href="/css/flexbox.css">
         <link rel="stylesheet" href="/css/github-gist.css">
@@ -34,10 +34,45 @@
             </aside>
 
             <section id="main-cont">
-                <h1 id="node-">简易 node 服务端小框架</h1>
+                <h1 id="section">简单的垂直居中方法</h1>
 
-<p>没什么说的了，直接看这个吧：<br />
-<a href="https://github.com/yj1438/simple-node-mvc">https://github.com/yj1438/simple-node-mvc</a></p>
+<p>居中的问题大家肯定都遇到过，水平居中不再话下，垂直居中的场景也有很多地方要用，但可就不像水平居中那么简单了。<br />
+下面提供两种靠谱的垂直居中方法。</p>
+
+<h2 id="section-1">幽灵元素法</h2>
+
+<p>通过一个 <code>::defore</code> 的幽灵元素将父容器“看成”是一个单行的 inline 元素，然后用 <code>vertical-align: middle</code> 使所有元素居中。</p>
+
+<pre><code class="language-css">.center-box {
+  position: relative;
+}
+.center-box::before {
+  content: " ";
+  display: inline-block;
+  height: 100%;
+  width: 1%;
+  vertical-align: middle;
+}
+.center-box &gt; .center-item{
+  display: inline-block;
+  vertical-align: middle;
+}
+</code></pre>
+
+<h2 id="flex-">flex 布局法</h2>
+
+<p>很优雅的方法，只用定义容器的属性，即可实现一个或多个子元素的居中，但有一定的兼容性，可以在移动端用。</p>
+
+<pre><code class="language-css">.center-box-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+</code></pre>
 
             </section>
         </div>
