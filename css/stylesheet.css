@@ -458,11 +458,14 @@ Full-Width Styles
 }
 #main_content {
     padding-top: 40px;
+    max-width: 1060px;
 }
 #footer_wrap {
     background: #212121;
 }
-
+#main-cont {
+    min-height: 520px
+}
 /*******************************************************************************
 @media query
 *******************************************************************************/
