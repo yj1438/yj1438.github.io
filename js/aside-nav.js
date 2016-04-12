@@ -1,3 +1,4 @@
+/*eslint-env jquery */
 (function(global){
     var $h2List = $('#main-cont').find('h2'),
         anchorArr = [],
