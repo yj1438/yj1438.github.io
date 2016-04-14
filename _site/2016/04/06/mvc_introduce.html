@@ -48,9 +48,60 @@ Xerox PARC 提出了 <strong>模型－视图－控制器（MVC）</strong> 模�
 
 <p><img src="/img/mvc/1.png" alt="MVC frame" /></p>
 
+<p>MVC 提出后被各个图形软件广泛采用。因其具有清晰的逻辑层次和优秀的工程管理性质，被企业软件巨头之一的 Oracle 用在了 J2EE 平台软件的设计模式上。
+随着 J2EE 的兴盛和软件面向对象设计的普通采用，MVC 的思想在软件各个领域都大放异彩。</p>
+
 <h2 id="section-1">框架思想哲理</h2>
 
+<blockquote>
+  <p>写书是人类表达和展示自己的思想的重要方式</p>
+</blockquote>
+
+<p>在老老年间，古人们写书或复制书就只能用手写，直接将字手写在纸上。数据的来源和展现都通过纸面这唯一中间过程。行为不可完全复制。</p>
+
 <p><img src="/img/mvc/2.jpg" alt="MVC frame" /></p>
+
+<p>后来，活字印刷术的出现将上述过程进行统一标准化。将整个过程划分为三部分： </p>
+
+<p><img src="/img/mvc/3.jpg" alt="MVC frame" /></p>
+
+<ul>
+  <li>统一的、持久化的数据源：活字 （Model）;</li>
+  <li>标准化的业务逻辑过程：排版 （Controller）;</li>
+  <li>纯粹的渲染展示：印刷 （View）;</li>
+</ul>
+
+<p>如此一来，整个印刷过程根据侧重点的不同分为三部分。每一部分在业务上能够做到相对独立，复用程度提高，后期的维护也简单不少。</p>
+
+<p>MVC 的思想其实在我们生活的各个方面都有展现。将普通作业进行工程化改造，有利于作业过程管理，思维上更加清晰明确。提高工作效率和后期维护度。</p>
+
+<h2 id="mvc--1">MVC 在软件框架上的具体体现</h2>
+
+<p>（以 babytree 为例，简单说一下 MVC 在软件系统前后台的体现）</p>
+
+<p>（。。。）</p>
+
+<h3 id="bbt--mvc-">bbt 后台 MVC 简要说明</h3>
+
+<h4 id="section-2">文件组织结构</h4>
+
+<ul>
+  <li>View : <code>baby/tmpl</code></li>
+</ul>
+
+<p><img src="/img/mvc/4.png" alt="MVC frame" /></p>
+
+<ul>
+  <li>Controller : <code>baby/classes/Babytree/Controllers</code></li>
+</ul>
+
+<p><img src="/img/mvc/5.png" alt="MVC frame" /></p>
+
+<ul>
+  <li>Controller : <code>baby/classes/Babytree/Models</code></li>
+</ul>
+
+<p><img src="/img/mvc/6.png" alt="MVC frame" /></p>
 
 
             </section>
