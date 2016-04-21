@@ -86,24 +86,92 @@ Xerox PARC 提出了 <strong>模型－视图－控制器（MVC）</strong> 模�
 <h4 id="section-2">文件组织结构</h4>
 
 <ul>
-  <li>View : <code>baby/tmpl</code></li>
-</ul>
-
-<p><img src="/img/mvc/4.png" alt="MVC frame" /></p>
-
-<ul>
   <li>Controller : <code>baby/classes/Babytree/Controllers</code></li>
 </ul>
 
 <p><img src="/img/mvc/5.png" alt="MVC frame" /></p>
 
+<blockquote>
+  <p>例如一个 Controller 文件 baby/classes/Babytree/Controllers/<strong>XXX/indexController.php</strong>  </p>
+</blockquote>
+
+<pre><code class="language-php">class indexController extends WebSiteController {
+    
+    /**
+     * 这是一个 action 
+     * 对应的 url /XXX/index/index
+     */
+    public function indexAction() {
+        //组织一些数据
+        $data = array(
+            type =&gt; '前端',
+            lessons =&gt; array(
+                'javascript',
+                'css',
+                'html'
+            ),
+            other =&gt; null
+        );
+        //将相关数据输出到页面上
+        $this-&gt;assign('data', $data);
+        //选择模板进行渲染
+        return $this-&gt;htmlView('tmpl/XXX/index_tpl.php');
+    }
+    
+}
+</code></pre>
+
 <ul>
-  <li>Controller : <code>baby/classes/Babytree/Models</code></li>
+  <li>View : <code>baby/tmpl</code></li>
+</ul>
+
+<p><img src="/img/mvc/4.png" alt="MVC frame" /></p>
+
+<blockquote>
+  <p>和上面 Controller 对应的模板文件 baby/tmpl/<strong>XXX/index_tpl.php</strong>  </p>
+</blockquote>
+
+<pre><code class="language-html">&lt;section&gt;&lt;h1&gt;你需要掌握什么核心专业知识?&lt;/h1&gt;
+    &lt;div&gt;你是&lt;span&gt;&lt;?php echo $data['type']?&gt;&lt;/span&gt;工程师&lt;/div&gt;
+    &lt;ul&gt;
+        &lt;?php foreach($data.lessons as $i =&gt; $v){?&gt;
+        &lt;li anchor="lessons"&gt;&lt;?php echo $v?&gt;&lt;/li&gt;
+        &lt;?php }?&gt;
+    &lt;/ul&gt;
+    &lt;p&gt;&lt;label&gt;还有补充的吗？&lt;input type="text" value="&lt;?php echo $data['other']?&gt;"&gt;&lt;/label&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;textarea style="width: 300px;" rows="5" placeholder="总结一下学习计划"&gt;总结一下吧&lt;/textarea&gt;&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+
+<ul>
+  <li>Model : <code>baby/classes/Babytree/Models</code></li>
 </ul>
 
 <p><img src="/img/mvc/6.png" alt="MVC frame" /></p>
 
+<blockquote>
+  <p>Model 中主要是业务中抽象出来的数据模型，比如以上的</p>
+</blockquote>
+
+<pre><code class="language-php">class Model {
+    
+    function __construct() {
+        $this-&gt;type = '前端';
+        $this-&gt;lessons = array(
+            'javascript',
+            'css',
+            'html'
+        );
+        $this-&gt;other = null;
+    }
+}
+
+//用 new Model() 可以获得一个数据实例
+</code></pre>
+
 <p>从数据到视图的流程大致如下：</p>
+
+<p><img src="/img/mvc/lichen.png" alt="MVC frame" /></p>
 
 <h3 id="mvc--2">主流前端框架的 MVC 简要分析</h3>
 
@@ -112,6 +180,50 @@ Xerox PARC 提出了 <strong>模型－视图－控制器（MVC）</strong> 模�
 <h4 id="backbone">Backbone</h4>
 
 <p>Backbone 框架是三者中最简练，但是最标准的 MVC 前端框架。</p>
+
+<h5 id="section-3">基本特性</h5>
+
+<p><img src="/img/mvc/backbone.png" alt="MVC frame" /></p>
+
+<p>backbone 的中文字面翻译叫 “脊椎” 。如其名，它本是框架特性就是提供了一个明确的结构划分，有良好的扩展性，没有添加过多的“自动化”方法。强依赖 <code>Underscore</code> 、<code>jquery</code>/<code>zepto</code>，从中你可以使用依赖库所提供的方法，比如<code>this._</code>、<code>this.$</code>。</p>
+
+<blockquote>
+  <p>注意：在 backbone 类的内部调用 jquery：<code>this.$</code> 有 dom 控制域的限制，这也许被很多刚开始接触的人认为这是一个坑，实际上这个限制正是 backbone 在模块划分上的一种规范，backbone 建议由此来限制用户在控制器内只对 <code>el</code> 中指定的 dom 元素进行操作，强制用户进行更好的模块划分。</p>
+</blockquote>
+
+<p>你会发现上图中缺少 “视图” 元素，这也体现了 backbone 的灵活性，它没有自带的模板引擎，你可以使用依赖库 <code>Underscore</code> 的 <code>_.template("———模板内容———")</code> 作为模板引擎，也可以使用其它的模板引擎。</p>
+
+<pre><code class="language-javascript">AppView = Backbone.View.extend({
+    el: '#appele',
+    template: _.template('&lt;p&gt;这是一个模板内容&lt;br&gt;&lt;span style="font-size: 30px;"&gt;&lt;%=value%&gt;&lt;/span&gt;&lt;/p&gt;'),
+    initialize: function() {
+        this.model = new Model();
+        this.listenTo(this.model, 'add', this.render);
+    },
+    render: function() {
+        this.$el.append(this.template({value: '哈哈'}));
+        this.$('.dom').show();
+    }
+})
+</code></pre>
+
+<h5 id="section-4">（视图）模板渲染原理</h5>
+
+<p>backbone 是弱单向的数据绑定框架，你只能手动的将所需的数据事件绑定到指定的 Model 上，完全没有视图端的数据变化监听，也不去管数据变化后视图怎么变。它把 render 方法抛给了用户，完全由用户决定怎么弄。<br />
+backbone 官方实际引导大家使用一个 简单、粗暴、有成效 的方式，就是 <strong>整个重新渲染</strong> ，而不是“细致”的根据变化的数据来去操作 DOM 一个一个的改。<br />
+这实际也是 MVC 的一个核心思想：<strong>数据启动</strong> — 用户不应该直接操作视图，应该把重心放到数据和业务逻辑上来。</p>
+
+<blockquote>
+  <p>注：<strong>整个重新渲染</strong> 在很多情况下并不粗暴，也是有性能考虑的根据的，dom 的频繁改动是页面性能的一个痛点，与其改10个，不如一次换1个，除非你能做到极致。</p>
+</blockquote>
+
+<h4 id="angular">angular</h4>
+
+<p>Backbone 框架是三者中最大，当然也是最 “强” 的 MVC 前端框架。</p>
+
+<h5 id="section-5">基本特性</h5>
+
+<p>angular 本质上是一个 MVVM 框架，也就是 <strong>数据模型-视图</strong> 双向绑定框架，自己就能提供框架所需的全部功能，当然人也可以再加入其它 js 类库，不过那之前我建议你还是先去认真找一找 angular 是否已经有了 -_-。</p>
 
 
             </section>
