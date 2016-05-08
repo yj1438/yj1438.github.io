@@ -131,6 +131,8 @@ class Model {
 
 下面，以 `backbone`、 `angularjs 1`、 `reactjs` 为例，简要说明一下当 MVC 做为前端的一个新兴的事物，是如何被我们所利用的。
 
+---
+
 #### Backbone
 
 Backbone 框架是三者中最简练，但是最标准的 MVC 前端框架。
@@ -164,17 +166,151 @@ AppView = Backbone.View.extend({
 
 backbone 是弱单向的数据绑定框架，你只能手动的将所需的数据事件绑定到指定的 Model 上，完全没有视图端的数据变化监听，也不去管数据变化后视图怎么变。它把 render 方法抛给了用户，完全由用户决定怎么弄。  
 backbone 官方实际引导大家使用一个 简单、粗暴、有成效 的方式，就是 **整个重新渲染** ，而不是“细致”的根据变化的数据来去操作 DOM 一个一个的改。  
-这实际也是 MVC 的一个核心思想：**数据启动** --- 用户不应该直接操作视图，应该把重心放到数据和业务逻辑上来。
+这实际也是 MVC 的一个核心思想：**数据驱动** --- 用户不应该直接操作视图，应该把重心放到数据和业务逻辑上来。
 
 > 注：**整个重新渲染** 在很多情况下并不粗暴，也是有性能考虑的根据的，dom 的频繁改动是页面性能的一个痛点，与其改10个，不如一次换1个，除非你能做到极致。
 
+---
+
+#### reactjs
+
+reactjs PS: 我在这里是充数的，其实，我只是个 UI 。  
+
+> JUST THE UI  
+Lots of people use React as the V in MVC. Since React makes no assumptions about the rest of your technology stack, it's easy to try it out on a small feature in an existing project.
+
+##### 基本特征
+
+如果说 “正规” 的 MVC 概念重心是进行层级的横向划分，那么 reactjs 的核心概念 Component 则提供一种(页面)模块的纵向划分思想。  
+
+![v or h](/img/aaa/vh.png)
+
+举个例子，大家手头有这样一个页面
+
+~~~html
+<body>
+    <header>
+        ...<!-- 此处省去50行 and 其它页面也用-->
+    </header>
+    
+    <aside>
+        ...<!-- 此处省去300行 -->
+    </aside>
+    
+    <section>
+        ...<!-- 此处省去500行 -->
+    </section>
+    
+    <footer>
+        ...<!-- 此处省去30行 and 其它页面也用 -->
+    </footer>
+</body>
+~~~
+
+这么“庞大”的一个页面，你会怎么分隔，也许你会说，可以用 php 把它折开啊~那么用前端的技术和方法呢？
+
+> 其实，php 和 java 的一些模板引擎早已做到这一步了，而且有着很好的实用性。现在需要用前端的技术完成“前端”的工作。
+
+现在有了 react 提供的页面组件化方式，你就不用把这么繁多的标签挤在一个页面里了。你的入口主页真的会变成这样:
+
+~~~html
+<body>
+    <MyHeader />
+    
+    <MyAside />
+    
+    <MySection />
+    
+    <MyFooter />
+</body>
+~~~
+
+你只需要在主页面（JS）中 “引入” 每一块的的 JS ，就是会得到你想要的结果，页面包含完整的功能与样式哦。就像这样:
+
+**index.jsx** 
+
+~~~javascript
+//react
+import React from 'react';
+//各个页面模块
+import MyHeader from './MyHeader';
+import MyAside from './MyAside';
+import MySection from './MySection';
+import MyFooter from './MyFooter';
+//整体需要的样式
+import './style/reset.less';
+import './style/layout.less';
+
+class Index extends React.Component {
+    render() {
+        return (
+            <div>
+                <MyHeader />
+                <MyAside />
+                <MySection />
+                <MyFooter />
+            </div>
+        )
+    }
+}
+
+export default Index;
+~~~
+
+**mySection.jsx**
+
+~~~javascript
+//react
+import React from 'react';
+//MySection 模块中需要的样式
+import './style/my_section.less';
+
+class MySection extends React.Component {
+    render() {
+        return (
+            <section>
+                ...<!-- 此处省去500行 -->
+            </section>
+        )
+    }
+}
+
+export default MySection;
+~~~
+
+通过 react 制作的每一个模块都是独立的，你不用再去纠结一个模块的 HTML结构、样式、JS脚本怎么分别弄进来，webpack 的强大的打包能力最终生成的文件肯定让你满意---当然这得自己去配置。
+
+##### MVC 特性
+
+从总体框架上来看，虽说 react 不是一个 MVC 框架，但其内在方法的划分和设计原理还是有明显的 MVC 思想。
+
+**state** 和 **render**。react 在数据和视图的关系上采用单向数据绑定的数据驱动模式，也就是数据模型和视图是一一对应的，不过数据改动后视图不一定立刻跟着变化，而是需要你自发的用 **setState** 去触发视图内容更新。
+
+但是 react 不像 backbone 那么懒，把渲染视图的过程也抛给用户，react 有自己的一套非常先进的视图渲染系统---基于虚拟 dom 的最少改动方案。大致过程如下图：
+
+> 注：策略上的区别对待是看 dom 更新的情况来确定是重新刷一遍、修改内容、还是替换等
+
+相比 backbone reactjs 就是算是把“DOM 操作”精细化到极致的人，我们最终看到的页面上的东西，不是完全真实的，而存在在内存里的 虚拟DOM 某种意义上才是和你的数据模型完全对应的 dom。
+
+> 再说一次，mvc 是一种思想，再优秀的 MVC 框架
+
+---
+
 #### angular
 
-Backbone 框架是三者中最大，当然也是最 “强” 的 MVC 前端框架。
+angular 框架是三者中最大，当然也是最 “强” 的 MVC 前端框架。
 
 ##### 基本特性
 
-angular 本质上是一个 MVVM 框架，也就是 **数据模型-视图** 双向绑定框架，自己就能提供框架所需的全部功能，当然人也可以再加入其它 js 类库，不过那之前我建议你还是先去认真找一找 angular 是否已经有了 -_-。
+angular 本质上是一个 MVVM 框架，也就是 **数据模型-视图** 双向绑定框架，自己就能提供框架所需的全部功能，当然你也可以再加入其它 js 类库，不过那之前我建议你还是先去认真找一找 angular 是否已经有了 -_-。
+
+从 MVC 的基本要点出发，这里简要说一下以下几种模块类型：
+
+![angular](/img/mvc/angular.png)
+
+任何一个 WEB 应用框架的主要流程大概都是这样的：
+
+
 
 
 
