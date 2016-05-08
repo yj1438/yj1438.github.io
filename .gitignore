@@ -1,2 +1,3 @@
 /_site/*
 !.keep
+.DS_Store
