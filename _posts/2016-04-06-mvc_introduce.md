@@ -183,7 +183,9 @@ Lots of people use React as the V in MVC. Since React makes no assumptions about
 
 如果说 “正规” 的 MVC 概念重心是进行层级的横向划分，那么 reactjs 的核心概念 Component 则提供一种(页面)模块的纵向划分思想。  
 
-![v or h](/img/aaa/vh.png)
+![v or h](/img/mvc/vh.png)
+
+> “横向划分”与“纵向划分”（“水平拆分”与“垂直拆分”）是软件设计的两种最基本思想，相互补充，最终向整个软件系统“组模式”进化。
 
 举个例子，大家手头有这样一个页面
 
@@ -288,11 +290,21 @@ export default MySection;
 
 但是 react 不像 backbone 那么懒，把渲染视图的过程也抛给用户，react 有自己的一套非常先进的视图渲染系统---基于虚拟 dom 的最少改动方案。大致过程如下图：
 
+![react 虚拟 DOM](/img/mvc/v-dom.png)
+
 > 注：策略上的区别对待是看 dom 更新的情况来确定是重新刷一遍、修改内容、还是替换等
 
-相比 backbone reactjs 就是算是把“DOM 操作”精细化到极致的人，我们最终看到的页面上的东西，不是完全真实的，而存在在内存里的 虚拟DOM 某种意义上才是和你的数据模型完全对应的 dom。
+##### 渲染的优化点
 
-> 再说一次，mvc 是一种思想，再优秀的 MVC 框架
+* 将只是内在用的、和视图无关的标识变量不要放在 state 下；
+* 连续多次的修改 state 下的数据时，可以前几步用直接赋值：
+    如：this.state.data = ‘new data’
+    最后再统一调起 setState，如：this.setState(data: xxx)
+* 尽可能的给每一个数组型的 dom 元素定死一个持久化的、唯一的 key，不要用随机值、遍历的 index 等不稳定的值；
+* 精确控制 shouldComponentUpdate 和 componentWillUpdate，帮助 react 进行过滤。
+
+
+相比 backbone reactjs 就是算是把“DOM 操作”精细化到极致的人，我们最终看到的页面上的东西，不是完全真实的，而存在在内存里的 虚拟DOM 某种意义上才是和你的数据模型完全对应的 dom。
 
 ---
 
@@ -308,10 +320,234 @@ angular 本质上是一个 MVVM 框架，也就是 **数据模型-视图** 双�
 
 ![angular](/img/mvc/angular.png)
 
-任何一个 WEB 应用框架的主要流程大概都是这样的：
+为了让大家大致了解各部分是干什么的，先说一下任何一个 WEB 应用框架的主要流程大概都是这样的：
 
+![angular](/img/mvc/web-app.png)
 
+> 在这里又要吐糟一下了，Js 总体来说，要比一些成熟的面向对象语言要弱的多，不论从前端框架还是整个 JS 语言的进化来看，都是在不断的追随着如 JAVA、C 等高级语言
 
+这样，我们从路由 ROUTER 入手，来一步步简要分析一下 angular。
+
+~~~javascript 
+angular.module('my_mvc', ['ngRoute', 'ngResource'])
+  .config(function ($routeProvider) {
+    'use strict';
+
+    var routeConfig = {
+        controller: 'IndexController',       //对应的 Controller
+        templateUrl: 'js/views/index.html',  //对应的 html View 
+        resolve: {                           //获取所需的 Model 操作对象 
+            store: function (dataFactory) {
+                //获取数据源
+                return dataFactory.then(function (module) {
+                    module.get(); // Fetch the todo records in the background.
+                    return module;
+                });
+            }
+        }
+    };
+
+    $routeProvider
+        .when('/', routeConfig)
+        .otherwise({
+            redirectTo: '/'
+        });
+  });
+~~~
+
+在路由中，angular 就对 controller 、view、model 进行了明确的组装。
+下面就来看看 controller、model 是怎么编写的。
+
+~~~javascript
+/**
+ * 控制器 IndexController
+ */
+angular.module('my_mvc')
+    .controller('IndexController', function IndexController($scope, store) {
+    'use strict';
+    
+    //从 service 里取数据操作对象
+    var datalist = $scope.datalist = store.datalist;
+    //====为了测试用
+    window.datalist = datalist;
+    window.$apply = $scope.$apply;
+    
+    //计算数组元素的个数，并进行及时的监控
+    $scope.count = datalist.length;
+    $scope.$watch('datalist', function () {
+        $scope.count = datalist.length;
+    }, true);
+    
+    /*
+     * 给页面提供的方法
+     */
+    //年龄加一
+    $scope._addAge = function (data, event) {
+        data.age = data.age + 1;
+        store.edit(data)
+    }
+    
+    //加一条记录
+    $scope._insertData = function () {
+        var _data = {
+            id: new Date().getTime(),
+            name: '小王' + ($scope.count + 1),
+            age: 19 + $scope.count
+        };
+        store.insert(_data);
+    }
+    
+});
+~~~
+
+~~~javascript
+/**
+ * 业务逻辑层 dataFactory
+ * 这里用了 factory 的封装形式
+ */
+angular.module('my_mvc')
+    .factory('dataFactory', function ($http, $injector) {
+        'use strict';
+        return $http.get('http//localhost/api')
+                .then(function success() {
+                    return $injector.get('http');
+                }, function error() {
+                    return $injector.get('localStorage');
+                })
+    
+    })
+    .factory('http', function ($resource) {
+        'use strict';
+        var store = {
+            datalist: [],
+            //用$resource构造 restful API 的 http 的远程接口
+            api: $resource('http//localhost/api/data/:id', null, {update: {method: 'PUT'}}),
+            //数据操作方法
+            get: function () {
+				return store.api.query(function (resp) {
+					angular.copy(resp, store.datalist);
+				});
+			},
+            edit: function (data) {
+                return store.api.update({ id: data.id }, data)
+					.$promise;
+            },
+            insert: function (data) {
+                var realData = store.datalist.slice(0);
+
+				return store.api.save(data,
+					function success(resp) {
+						data.id = resp.id;
+						store.datalist.push(data);
+					}, function error() {
+						angular.copy(realData, store.datalist);
+					})
+					.$promise;
+            }
+        };
+        return store;
+    })
+    .factory('localStorage', function ($q) {
+        'use strict';
+        var LOCALSTORAGE_ID = 'my_mvc';
+        var store = {
+            datalist: [],
+            //通过的从 localstorage 存取数据的方法
+            _getFromLocalStorage: function () {
+                return JSON.parse(localStorage.getItem(LOCALSTORAGE_ID) || '[]');
+            },
+            _saveToLocalStorage: function (datalist) {
+                return localStorage.setItem(LOCALSTORAGE_ID, JSON.stringify(datalist));
+            },
+            //数据操作方法
+            get: function () {
+                var deferred = $q.defer();
+				angular.copy(store._getFromLocalStorage(), store.datalist);
+				deferred.resolve(store.datalist);
+				return deferred.promise;
+            },
+            edit: function (data) {
+                var deferred = $q.defer(),
+                    i;
+                for (i = 0; i < store.datalist.length; i++) {
+                    if(data.id === store.datalist[i].id) {
+                        break;
+                    }
+                }
+                store.datalist[i] = data;
+                store._saveToLocalStorage(store.datalist);
+                deferred.resolve(store.datalist)
+                return deferred.promise;
+            },
+            insert: function (data) {
+                var deferred = $q.defer();
+                store.datalist.push(data);
+                store._saveToLocalStorage(store.datalist);
+                deferred.resolve(store.datalist);
+                return deferred.promise;
+            }
+            
+        };
+        return store;
+    })
+~~~
+
+这里要专门说一下 angular 的 service 层。做为一个前端框架，ng 的 service 层异常强大，直接把后台常用的 service 层概念都搬了过来，而且功能实现的都有模有样的。 
+
+* 支持依赖注入 --- $injector (JAVA的一个卖点)
+* 支持 restful 的接口调用 --- $resource
+* 有三种表达形式 --- factory、service、provider
+
+##### angular 双向绑定机制的简要分析
+
+Angular 通过 $watch、$apply、$digest 三个内方法来实现两端的监听
+
+**$watch** 是 model 数据的变化监听队列
+
+~~~html
+<section id="mvcapp">
+    <ul>
+        <li ng-repeat="data in datalist track by $index" ng-click="_addAge(data)"}>
+            姓名: {{data.name}}, 年龄：{{data.age}}
+        </li>
+    </ul>
+    <p>点一下加一岁哦~</p>
+    <p>共有{{count}}条记录<button ng-click="_insertData()">加一条记录</button></p>
+</section>
+~~~
+
+每当有 controller 最的变量被“写”到模板里时，就 会在 $watch 里添加一条的监听
+
+> 在说明 $apply、$digest 的功能前，先提问一个问题？
+> 你有没有想过这个问题：
+Angular 没有提供类似 get(‘data’)、 setState 的特定方法来在数据变动时视图的更新，而是简单的常规 js 对象赋值就能同步改变视图。  
+比如：只是这样 data.age = data.age + 1 ，页面里的年龄就加了一岁。
+要知道，事件监听只是页面 DOM 才有的东西，单纯 JS 数据可没有事件机制的。
+
+？？？？？？？？？？？？？？？？？？
+
+**Angular content** --- 双向绑定背景的重要概念
+
+angular 实际没有直接对数据做出监听（本质上也不可能为到），angular 为自己营造了一个叫angular content 的运行环境，任何 “ng-”自定义事件的触发和带有”ng-”指令的 DOM 变化，都会调起下面要说的 $apply 指令，来进行下一步的更新工作。
+
+在上面的 controller 代码中，**//====为了测试用** 的下面两行，我估意向 window 暴露了两个对象(方法)，当你直接通过 window.datalist 来修改数据时，页面视图是不会发生变化的，因为这个修改没有被 angular content 捕捉到。当你调用一下 window.$apply 时，页面又和数据同步了，因为 $apply 是调起页面渲染的功能。
+
+angular content ---> $apply ---> $digest 流程如下：
+
+![angular](/img/mvc/angular-liuchen.png)
+
+##### 渲染的优化点
+
+…好吧，我只能假装一下有优化点
+
+Angular 双向绑定的 $watch、$apply、$digest 机制比较固化，留给使用自己的改进很少。
+其中 ng 的数据监听是重点，为了不漏掉任何一个可能会影响数据变化的情况，angular 生成的 $watch 比模板上能看到的要多，还好 js 的处理速度非常快，表现在页面上不会感觉到慢。（但的确比单向绑定框架更耗资源）
+
+ECMAscript 6 中提到了新的特性 Object.observe 。希望浏览器内核提供原生支持后，双向绑定应该会变得更好。
+
+---
+
+总结：mvc 是一种思想，再优秀的 MVC 框架也不一定写出和符合 MVC 逻辑的代码，当然，即使没有 MVC 框架，也可以写出层级清晰的程序。
 
 
 
