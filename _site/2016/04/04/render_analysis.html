@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>前端框架 “render” 分析</title>
+        <meta name="keywords" content="前端框架 “render” 分析">
         <link rel="stylesheet" href="/css/stylesheet.css" media="screen">
-        <link rel="stylesheet" href="/css/flexbox.css">
         <link rel="stylesheet" href="/css/github-gist.css">
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,8 +20,8 @@
         <header class="inner">
             <a id="forkme_banner" href="https://github.com/yj1438">View on GitHub</a>
 
-            <h1 id="project_title">Yinjie - GitHub.io</h1>
-            <h2 id="project_tagline">Yinjie - GitHub.io</h2>
+            <h1 id="project_title"><a href="/">Yinjie - GitHub.io</a></h1>
+            <h2 id="project_tagline">Welcome to the Yinjie's notes</h2>
 
         </header>
     </div>
@@ -484,6 +484,18 @@ Angular 没有提供类似 get(‘data’)、 setState 的特定方法来在数�
                 hljs.highlightBlock(block);
             });
         });
-    </script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
     </body>
 </html>
