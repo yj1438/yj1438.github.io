@@ -5,15 +5,16 @@ title: ReactNative Navigator configureScene 自定义动画介绍
 
 # ReactNative Navigator configureScene 自定义动画介绍
 
-ReactNative 已经发布一年多了，其热更新和一拖二的开发移动开发优势在目前来看虽然不是很成熟，但也也算是移动开发的一个新技术结点。值得大家去涉猎研究。
+> <span style="float: right; margin-right: 20px;"> @version **rn 0.31**<br> </span>  
+> <span style="float: right; margin-right: 20px;"> @supported by **Caonan** </span>  
 
-> @version **rn 0.31**
+<p><br></p>
 
-> @part of code authed by **Caonan**
+ReactNative 已经发布一年多了，其热更新和统一 andriod + IOS 开发的优点也越来越成熟。值得大家去涉猎研究。
 
 ## Navigator 过渡动画
 
-Navigator 应该是 RN 的一个核心 component 相当于 web SPA 的路由。
+Navigator 应该是 RN 的一个核心 component， 相当于 web SPA 的路由。
 
 一般的 APP 在视图“页面”进出栈的时候都会有一个过渡动画，RN 当然也在 Navigator 中有相关的配置。如下：
 
@@ -63,7 +64,7 @@ Navigator 应该是 RN 的一个核心 component 相当于 web SPA 的路由。
 
 有兴趣的可以自己去看一下。
 
-## 自定义动画配置 Eg
+## 自定义动画配置 eg
 
 估计不少人一看到上面文件中一堆代码就没耐心了，实际都是重复的各类动画的配置，关键性的动画实现代码整理如下：
 
@@ -220,9 +221,9 @@ Navigator 应该是 RN 的一个核心 component 相当于 web SPA 的路由。
 
 ~~~
 
-上述是笔者搞的一个横向无缩放滑动的过渡动画。以此为例简单说明一下。
+上述是笔者搞的一个横向无缩放滑动的过渡动画。如果满足你的需要，可以直接拿去用了。下面以此为例简单说明一下。
 
-按接口的输出从后往前倒述简述着急方法。
+按接口的输出从后往前简述主要方法。
 
 ~~~
     gestures
