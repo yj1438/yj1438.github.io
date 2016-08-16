@@ -98,6 +98,14 @@ Navigator 应该是 RN 的一个核心 component 相当于 web SPA 的路由。
             extrapolate: true,
             round: PixelRatio.get()
         },
+        // transformRotateRadians: {
+        //   from: {x: 0, y: 0, z: 0, w: 1},
+        //   to: {x: 0, y: 0, z: -0.47, w: 0.87},
+        //   min: 0,
+        //   max: 1,
+        //   type: 'linear',
+        //   extrapolate: true
+        // },
         // opacity: {
         //     value: 1,
         //     type: 'constant'
@@ -216,15 +224,63 @@ Navigator 应该是 RN 的一个核心 component 相当于 web SPA 的路由。
 
 按接口的输出从后往前倒述简述着急方法。
 
-### `gestures`
+~~~
+    gestures
+~~~
 
 手势功能动画，用于定义 APP 中的手势，比如 IOS 中大幅的从左向右滑动会退回上一页面，这个只是简单说明，实际行为的配置在 `BaseLeftToRightGesture` 里，不再多述。大家可以自己看。
 
-### `springFriction、springTension` 
+~~~
+    springFriction
+    springTension
+~~~
 
 弹簧类动画的摩擦系数、弹性系数，用于微调动画结尾时的“弹性抖动”效果，自己试一下就有所体会。
 
-### `animationInterpolators`
+~~~
+    animationInterpolators
+~~~
 
 动画关键配置，具体的动画实现就全在这里啦。
+
+以 `OutToLeft` 为例，这是一个返回的过渡动画，效果是页面从左侧平行滑出，无缩放，透明度渐减。
+
+其中有 `translateX`、`opacity`、`scale`、等几个动画属性，看似和 CSS3 的动画很像，这对于前端童鞋来说上手就一下变简单了。
+
+对于不变的属性：  
+
+~~~javascript
+    value: 1,                   //属性值，比如长度、透明度、放缩比例、角度等
+    type: 'constant'            //类型是常量
+~~~
+
+对于变化属性：
+
+~~~javascript
+    from: {x: 0, y: 0, z: 0},                   // 初始值
+    to: {x: -SCREEN_WIDTH, y: 0, z: 0},         // 终状态值
+    min: 0,                                     // 变化范围最小值
+    max: 1,                                     // 变化范围最大值
+    type: 'linear',                             // 变化速度类型
+    extrapolate: true,                          // 预判断
+    round: PixelRatio.get()                     // 精确范围，eg.: PixelRatio.get() 精确到屏幕像素比倍数
+~~~
+
+目前源码中提到的动画属性有： 
+
+~~~
+    transformTranslate          // 3D 位移变化
+    translateX                  // X 轴位移变化，类比 Y、Z
+    opacity                     // 透明度
+    scale                       // 放缩
+    transformScale              // 兼容性放缩
+    scaleX                      // X 轴放缩比例，类比 Y
+    transformRotateRadians      // 旋转弧度
+~~~
+
+还算是比较全的，一般的效果都可以满足。具体就看你怎么实现了。
+
+## 结束
+
+完成以上自定义动画，引入后，如第一段代码那样引入即可。
 
