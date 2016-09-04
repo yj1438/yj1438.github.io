@@ -1,137 +1,25 @@
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+body,div,span,object,iframe,h1,h2,h3,h4,h5,p,blockquote,pre,a,abbr,acronym,code,em,img,sub,sup,i,dl,dt,
+dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,figure,figcaption,footer,header,hgroup,menu,nav,section,audio,video {
     margin: 0;
     padding: 0;
 }
 body {
     background: #fafafa;
-    font-size: 100%;
+    font-size: 16px;
+    font-family: "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
-
-/* HTML5 display-role reset for older browsers */
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+figcaption,figure,hgroup,menu,nav{
     display: block;
 }
-ol,
-ul {
+ol,ul {
     list-style: none;
 }
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-/*******************************************************************************
-Theme Styles
-*******************************************************************************/
-
-.mainpage {
-    box-sizing: border-box;
-    color: #181818
-    font-size: 16px;
-    font-family: Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1,h2,h3,h4,h5 {
     margin: 10px 0;
     color: #222222;
-    font-family: 'Architects Daughter', 'Yuppy SC', 'Microsoft Yahei', Helvetica, Arial;
+    font-family: 'Architects Daughter', 'Yuppy SC', 'Microsoft Yahei', Helvetica, Arial, sans-serif;
 }
 h1 {
     font-size: 36px;
@@ -147,19 +35,6 @@ h4 {
 }
 h5 {
     font-size: 18px;
-}
-h6 {
-    font-size: 16px;
-}
-
-/*
-p {
-  margin: 10px 0 15px 0;
-}
-*/
-
-footer p {
-    color: #f2f2f2;
 }
 a {
     text-decoration: none;
@@ -182,64 +57,30 @@ a:visited,
 a:link{
     text-decoration: none;
 }
+
+/*******************************************************************************
+Theme Styles
+*******************************************************************************/
+
+.mainpage {
+    box-sizing: border-box;
+    color: #181818;
+}
+
+footer p {
+    color: #f2f2f2;
+}
 footer a {
     color: #F2F2F2;
     text-decoration: underline;
 }
-em {
-    font-style: italic;
-}
-strong {
-    font-weight: bold;
-}
-
-/*
-img {
-  position: relative;
-  margin: 0 auto;
-  max-width: 739px;
-  padding: 5px;
-  margin: 10px 0 10px 0;
-  border: 1px solid #ebebeb;
-
-  box-shadow: 0 0 5px #ebebeb;
-  -webkit-box-shadow: 0 0 5px #ebebeb;
-  -moz-box-shadow: 0 0 5px #ebebeb;
-  -o-box-shadow: 0 0 5px #ebebeb;
-  -ms-box-shadow: 0 0 5px #ebebeb;
-}
-*/
-
-p, li{
-    font-family: 'Microsoft Yahei', 'Lantinghei SC';
-    line-height: 28px;
-    font-size: 16px;
-    text-indent: 2em;
-    margin: 8px 0;
-}
 p img {
-/*
-    display: inline;
-    margin: 10px 0;
-    padding: 0;
-    vertical-align: middle;
-    text-align: center;
-    border: none;
-    max-width: 640px;
-    width: 100%;
-*/
-    display: inline;
+    display: inline-block;
     margin: 8px auto;
     padding: 0;
-    vertical-align: middle;
-    /* text-align: center; */
-    /* border: none; */
     max-width: 640px;
     width: 100%;
     display: block;
-}
-li p, li{
-    text-indent: 0;
 }
 pre {
     border: 1px solid #eee;
@@ -247,51 +88,9 @@ pre {
 code {
     font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
     font-size: 14px;
-    line-height: 20px;
+    line-height: 18px;
 }
-
-/*
-pre, code {
-  width: 100%;
-  color: #222;
-  background-color: #fff;
-
-  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  font-size: 14px;
-
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-}
-
-pre {
-  width: 100%;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,.1);
-  overflow: auto;
-}
-
-code {
-  padding: 3px;
-  margin: 0 3px;
-  box-shadow: 0 0 10px rgba(0,0,0,.1);
-}
-
-pre code {
-  display: block;
-  box-shadow: none;
-}
-*/
-
-blockquote {
-    color: #666;
-    margin-bottom: 20px;
-    padding: 0 0 0 20px;
-    border-left: 3px solid #bbb;
-}
-ul,
-ol,
-dl {
+ul,ol {
     margin-bottom: 15px
 }
 ul {
@@ -304,60 +103,13 @@ ol {
     list-style: decimal;
     padding-left: 20px;
 }
-dl dt {
-    font-weight: bold;
-}
-dl dd {
-    padding-left: 20px;
-    font-style: italic;
-}
-dl p {
-    padding-left: 20px;
-    font-style: italic;
-}
 hr {
     height: 1px;
     margin-bottom: 5px;
     border: none;
     background: url('../img/bg_hr.png') repeat-x center;
 }
-table {
-    border: 1px solid #373737;
-    margin-bottom: 20px;
-    text-align: left;
-}
-th {
-    font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    padding: 10px;
-    background: #373737;
-    color: #fff;
-}
-td {
-    padding: 10px;
-    border: 1px solid #373737;
-}
-form {
-    background: #f2f2f2;
-    padding: 20px;
-}
-
-/*******************************************************************************
-Full-Width Styles
-*******************************************************************************/
-
-
 /*====================================*/
-
-#sidebar {
-    width: 200px;
-    padding-left: 20px;
-    background: transparent url(../img/sidebar-bg.jpg) 0 0 no-repeat;
-}
-#sidebar ul {
-    margin: 30px 0;
-    line-height: 30px;
-    font-size: 18px;
-}
 .outer {
     width: 100%;
 }
@@ -450,6 +202,24 @@ Full-Width Styles
     padding-top: 40px;
     max-width: 1060px;
 }
+#main-cont blockquote{
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 1.5em;
+    font-size: 85%;
+    color: #333;
+    margin-right: 20px;
+    border-left: 2px solid #df5000;
+    background: #fff;
+}
+#main-cont p {
+    margin: 0.5em 0;
+    text-indent: 2em;
+    line-height: 1.8em;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 #footer_wrap {
     background: #212121;
 }
@@ -460,62 +230,69 @@ Full-Width Styles
 @media query
 *******************************************************************************/
 
+/* pc 端*/
+#sidebar{
+    box-sizing: border-box;
+}
+#sidebar ul {
+    margin: 2em 0;
+}
 @media only screen and (min-width: 768px) {
     #main-cont {
         margin-left: 10px;
         margin-right: 230px;
     }
     #sidebar {
+        padding-left: 20px;
+        background: transparent url(../img/sidebar-bg.jpg) 0 0 no-repeat;
         float: right;
         width: 220px;
-        min-height: 504px;  
+        font-size: 18px;
+        min-height: 504px;
     }
 }
 @media only screen and (min-width: 320px) and (max-width: 767px) {
     #main-cont {
         margin: 0 10px;
     }
+    #sidebar {
+        padding: 0 10px;
+        width: 100%;
+        font-size: 16px;
+    }
 }
 
-@media screen and (max-width: 639px) {
+@media only screen and (max-width: 640px) {
     .inner .date {
         display: none;
     }
 }
 
-@media screen and (min-width: 1377px) {
-    
-}
-@media screen and (min-width: 1025px) and (max-width: 1376px) {
-    
-}
-@media screen and (min-width: 481px) and (max-width: 1024px) {
-   
-}
-@media screen and (max-width: 480px) {
+/* 移动端 */
+
+@media only screen and (max-width: 420px) {
     #downloads {
         display: none;
     }
-    
     #project_title {
         font-size: 32px;
     }
+}
+
+@media only screen and (max-width: 420px) {
     h1 {
-        font-size: 28px;
-    }
-    h2 {
         font-size: 24px;
     }
+    h2 {
+        font-size: 20px;
+    }
     h3 {
-        font-size: 21px;
+        font-size: 16px;
     }
     h4 {
-        font-size: 18px;
+        font-size: 14px;
     }
     h5 {
         font-size: 14px;
-    }
-    h6 {
-        font-size: 12px;
     }
 }
