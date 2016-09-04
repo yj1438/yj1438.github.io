@@ -110,18 +110,18 @@ hr {
     background: url('../img/bg_hr.png') repeat-x center;
 }
 /*====================================*/
-.outer {
-    width: 100%;
-}
+
+/*最上面的一部分*/
 .inner {
     position: relative;
     padding: 20px 10px;
     min-width: 320px;
     max-width: 1280px;
     margin: 0 auto;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 #forkme_banner {
-    display: block;
     position: absolute;
     top: 0;
     right: 10px;
@@ -148,7 +148,7 @@ hr {
 #project_title {
     margin: 0;
     color: #fff;
-    font-size: 42px;
+    font-size: 40px;
     font-weight: 700;
     text-shadow: #111 0px 0px 10px;
 }
@@ -275,7 +275,10 @@ hr {
         display: none;
     }
     #project_title {
-        font-size: 32px;
+        font-size: 28px;
+    }
+    #project_tagline {
+        font-size: 22px;
     }
 }
 
