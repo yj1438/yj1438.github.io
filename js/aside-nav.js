@@ -15,6 +15,4 @@
     });
     
     $('#sidebar').find('.side-nav').html(li_html);
-    
-    
 })(window);
