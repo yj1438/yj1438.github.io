@@ -5,14 +5,16 @@ title: CSS3 transform 对HTML文档流带来的影响
 
 # CSS3 transform 对HTML文档流带来的影响
 
+> html 总是那么的惊奇
+
 ## 来源于“硬件加速”
 
 很多网上文章都说建议打开浏览器的硬件加速，这样页面渲染速度、动画流畅性会提高。这几乎成了页面制作的标配，管实际有没有用都来一个：
 
 ~~~css
-body {
-    transform: translate3d(0,0,0);
-}
+    body {
+        transform: translate3d(0,0,0);
+    }
 ~~~
 
 但这在很多情况下会引起 html 层级文档流的“异常”。 [W3C spec](http://www.w3.org/TR/css3-2d-transforms/#transform-rendering) 中有如下描述: 
@@ -39,13 +41,14 @@ The object acts as a containing block for fixed positioned descendants.
 
 ## transform 改变定位默认属性
 
-例子代码如下： 
+例子代码如下：
+
 ~~~html
-<body>
-    <header style="position: fixed; top: 0;"></header>
-    <div style="height: 2000px;"></div>
-    <footer style="position: fixed; bottom: 0;"></footer>
-</body>
+    <body>
+        <header style="position: fixed; top: 0;"></header>
+        <div style="height: 2000px;"></div>
+        <footer style="position: fixed; bottom: 0;"></footer>
+    </body>
 ~~~
 
 大家都知道，dom 元素的默认定位属性是 `position: static;` 这也是标准文档流的标准定位方式。  
