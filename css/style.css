@@ -15,6 +15,7 @@ figcaption,figure,hgroup,menu,nav{
 }
 ol,ul {
     list-style: none;
+    margin-left: 30px;
 }
 h1,h2,h3,h4,h5 {
     margin: 10px 0;
@@ -207,7 +208,7 @@ hr {
     padding: 0 1.5em;
     font-size: 85%;
     color: #333;
-    margin-right: 20px;
+    margin-right: 5px;
     border-left: 2px solid #df5000;
     background: #fff;
 }

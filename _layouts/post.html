@@ -16,9 +16,9 @@
         <meta name="x5-page-mode" content="app" />
         <title>{{ page.title || Yinjie - GitHub.io}}</title>
         <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
-        <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
-        <link rel="stylesheet" href="/css/style.min.css">
+        <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.6.0/styles/github-gist.min.css">
+        <link href="//fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -28,10 +28,8 @@
         <div id="header_wrap" class="outer">
             <header class="inner">
                 <a id="forkme_banner" href="https://github.com/yj1438">View on GitHub</a>
-
                 <h1 id="project_title"><a href="/">Yinjie - GitHub.io</a></h1>
                 <h2 id="project_tagline">Welcome to the Yinjie's notes</h2>
-
             </header>
         </div>
             
@@ -73,18 +71,10 @@
                 <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
             </footer>
         </div>
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
         <script src="//cdn.jsdelivr.net/highlight.js/9.6.0/highlight.min.js"></script>
         <script src="/js/aside-nav.js"></script>
         <script>
-            // baidu 统计
-            var _hmt = _hmt || [];
-            (function() {
-                var hm = document.createElement("script");
-                hm.src = "//hm.baidu.com/hm.js?146fe495fee020bf0e4dd701aa73965f";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            })();
             // highlight
             hljs.initHighlightingOnLoad({useBR: true});
             $(document).ready(function() {
@@ -96,6 +86,14 @@
                 var img = new Image();
                 img.src = 'https://www.h2statistics.ml/';
             });
+            // baidu 统计
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?146fe495fee020bf0e4dd701aa73965f";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
         </script>
     </body>
 </html>
