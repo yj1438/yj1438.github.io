@@ -25,15 +25,30 @@
     body {
         margin: 0;
         padding: 0;
-        background: url(/img/map.png) no-repeat;
+        /*background: url(/img/map.png) no-repeat;
         background-size: cover;
-        background-position: center;
+        background-position: center;*/
+    }
+    .diagram {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: relative;
+        left: 50%;
+    }
+    .diagram li {
+        height: 1px;
+        background: #000;
+    }
+    .negative {
+        transform: translateX(-100%);
     }
     </style>
     <title>加速度/速度演示</title>
 </head>
 <body>
-
+    <ul id="diagram" class="diagram">
+    </ul>
     <div id="mine" class="mine" style="
         position: absolute;
         top: 50%;
@@ -46,23 +61,59 @@
         margin: -5vw 0 0 -6vw;
         border: 1px solid red;
     "></div>
+    
+    <div>
+        <p>Y向加速度：<span id="_y"></span></p>
+        <p>X向加速度：<span id="_x"></span></p>
+        <p>Z向加速度：<span id="_z"></span></p>
+        <p>absAccY：<span id="absAccY"></span></p>
+    </div>
 
     <script>
         // 
         var eleMine = document.getElementById('mine'),
             forwardAcc = 0, leftAcc = 0,
-            absoluteTop, absoluteleft;
+            absoluteTop, absoluteLeft;
+        var timefragment = 0,               // 时间片计时
+            nowts = 0,
+            _time = 50 / 1000;                      // 当前时间 
+
+        // TEST
+        var count = 0, absAcc = 0;
+
+        var ulEle = document.getElementById('diagram');
         window.addEventListener('devicemotion', function (evt) {
-            var _x = evt.acceleration.x.toFixed(1),
-                _y = evt.acceleration.y.toFixed(1),
-                _z = evt.acceleration.z.toFixed(1);
-            // forwardAcc = forwardAcc + parseInt(_y, 10);
-            if (_y) {
-                absoluteTop = parseInt(eleMine.style.top, 10);
-                absoluteTop = absoluteTop + (5 * _y);
-                absoluteTop = absoluteTop < 0 ? 0 : (absoluteTop > 100 ? 100 : absoluteTop);
-                eleMine.style.top = absoluteTop + '%';
-            }
+            nowts = new Date().getTime();
+            // 控制时间片
+                timefragment = nowts;
+                var _x = evt.acceleration.x,
+                    _y = evt.acceleration.y,
+                    _z = evt.acceleration.z;
+                document.getElementById('_y').innerHTML = _y;
+                document.getElementById('_x').innerHTML = _x;
+                document.getElementById('_z').innerHTML = _z;
+                // forwardAcc = forwardAcc + (_y * _time);
+                // leftAcc = leftAcc + (_x * _time); 
+                if (Math.abs(_y) > 0.5) {
+                    var liEle = document.createElement('li');
+                    liEle.style.width = Math.abs(_y) * 50 + 'px';
+                    if (_y < 0) {
+                        liEle.classList.add('negative');
+                    }
+                    ulEle.appendChild(liEle);
+                    absoluteTop = parseFloat(eleMine.style.top);
+                    absoluteTop = absoluteTop + (_y * _time * _time) * 100;
+                    document.getElementById('absAccY').innerHTML = _y * _time * _time;
+                    console.log(_y * _time * _time);
+                    absoluteTop = absoluteTop < 0 ? 0 : (absoluteTop > 100 ? 100 : absoluteTop);
+                    eleMine.style.top = absoluteTop + '%';
+                }
+                // if (leftAcc) {
+                //     absoluteLeft = parseFloat(eleMine.style.left);
+                //     absoluteLeft = absoluteLeft + (0.5 * leftAcc);
+                //     absoluteLeft = absoluteLeft < 0 ? 0 : (absoluteLeft > 100 ? 100 : absoluteLeft);
+                //     eleMine.style.left = absoluteLeft + '%';
+                // }
         }, false);
     </script>
 </body>
