@@ -28,47 +28,47 @@
 </head>
 <body>
 <style>
-html, body {
-    height: 100%;
-}
-.view {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    /*display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-        flex-direction: column;*/
-}
-.view b {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 40px;
-    color: #aaa;
-    transform: translate(-50%, -50%);
-}
-.big-bg {
-    /*background: transparent url(/img/qinmingshanghetu.jpg) no-repeat;*/
-    height: 120%;
-    position: relative;
-    display: inline-block;
-    /*-webkit-transition: all .2s ease-out;
-    transition: all .2s ease-out;*/
-}
-.big-bg img {
-    height: 100%;
-}
+    html, body {
+        height: 100%;
+    }
+    .view {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /*display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;*/
+    }
+    .view b {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 40px;
+        color: #aaa;
+        transform: translate(-50%, -50%);
+    }
+    .big-bg {
+        /*background: transparent url(/img/qinmingshanghetu.jpg) no-repeat;*/
+        height: 120%;
+        position: relative;
+        display: inline-block;
+        /*-webkit-transition: all .2s ease-out;
+        transition: all .2s ease-out;*/
+    }
+    .big-bg img {
+        height: 100%;
+    }
 </style>
 
 <div class="view">
@@ -81,19 +81,23 @@ html, body {
 <script>
     function readyFn() {
         'use strict';
+        /**
+         * 
+         */
         var dom = document.querySelector('.big-bg'),
             img = dom.querySelector('img');
         var IMG_W = img.width,
             IMG_H = img.height;
         var WIN_W = document.documentElement.clientWidth,
             WIN_H = document.documentElement.clientHeight;
-        var timefragment = 0,
-            nowts = 0;
-        // 設置默認的top\left
+        var timefragment = 0,               // 时间片计时
+            nowts = 0;                      // 当前时间
+        // 设置默认的left/top
         dom.style.top = -(IMG_H - WIN_H) / 2 + 'px';
         dom.style.left = -(IMG_W - WIN_W) / 2 + 'px';
         window.addEventListener('deviceorientation', function (evt) {
             nowts = new Date().getTime();
+            // 控制时间片
             if (nowts  - timefragment > 37) {
                 timefragment = nowts;
                 var alpha = evt.alpha,          //垂直于屏幕的轴 0 ~ 360
@@ -106,8 +110,6 @@ html, body {
                 _left = left + (gamma / 90 * 30);
                 _top = _top >= 0 ? 0 : (_top < (WIN_H - IMG_H) ? (WIN_H - IMG_H) : _top);
                 _left = _left >= 0 ? 0 : (_left < (WIN_W - IMG_W) ? (WIN_W - IMG_W) : _left);
-                // _top = Math.abs(_top) < (IMG_H - WIN_H) ? _top : (_top / Math.abs(_top) * (IMG_H - WIN_H));
-                // _left = Math.abs(_left) < (IMG_W - WIN_W) ? _left : (_left / Math.abs(_left) * (IMG_W - WIN_W));
                 dom.style.top = _top + 'px';
                 dom.style.left = _left + 'px';
             }
