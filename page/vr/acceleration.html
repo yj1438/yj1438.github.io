@@ -35,6 +35,8 @@
         list-style: none;
         position: relative;
         left: 50%;
+        /*transform-origin: center top;
+        transform: scale(.3);*/
     }
     .diagram li {
         height: 1px;
@@ -66,55 +68,66 @@
         <p>Y向加速度：<span id="_y"></span></p>
         <p>X向加速度：<span id="_x"></span></p>
         <p>Z向加速度：<span id="_z"></span></p>
-        <p>absAccY：<span id="absAccY"></span></p>
+        <p>interval：<span id="interval"></span></p>
+        <p style="display: none;">absAccY：<span id="absAccY"></span></p>
+        <p>STEP TIME：<span id="times"></span></p>
     </div>
 
     <script>
         // 
-        var eleMine = document.getElementById('mine'),
-            forwardAcc = 0, leftAcc = 0,
-            absoluteTop, absoluteLeft;
-        var timefragment = 0,               // 时间片计时
-            nowts = 0,
-            _time = 50 / 1000;                      // 当前时间 
+        var eleMine = document.getElementById('mine'),          //中间的DOM
+            _time = 50 / 1000,                      // 当前时间 
+            negativeFlag;
 
         // TEST
-        var count = 0, absAcc = 0;
+        var count = -1, effective = 0;
 
         var ulEle = document.getElementById('diagram');
         window.addEventListener('devicemotion', function (evt) {
-            nowts = new Date().getTime();
             // 控制时间片
-                timefragment = nowts;
                 var _x = evt.acceleration.x,
                     _y = evt.acceleration.y,
                     _z = evt.acceleration.z;
-                document.getElementById('_y').innerHTML = _y;
-                document.getElementById('_x').innerHTML = _x;
-                document.getElementById('_z').innerHTML = _z;
-                // forwardAcc = forwardAcc + (_y * _time);
-                // leftAcc = leftAcc + (_x * _time); 
-                if (Math.abs(_y) > 0.5) {
-                    var liEle = document.createElement('li');
+                document.getElementById('_y').innerHTML = parseFloat(_y.toFixed(2));
+                document.getElementById('_x').innerHTML = parseFloat(_x.toFixed(2));
+                document.getElementById('_z').innerHTML = parseFloat(_z.toFixed(2));
+                document.getElementById('interval').innerHTML = evt.interval;
+                if (Math.abs(_y) >= 0.55) {
+                    var liEle = document.createElement('li'),
+                        flag = 1;
                     liEle.style.width = Math.abs(_y) * 50 + 'px';
                     if (_y < 0) {
                         liEle.classList.add('negative');
+                        flag = -1;
+                    }
+                    if (negativeFlag === flag) {
+                        ++effective;
+                    } else {
+                        /**
+                         * 此处有个难点，甩手走和不甩手走的加速度风格不一致，大致产生出两个组合
+                         *      不甩手走：effective >=7
+                         *      甩手走：(flag === 1 && effective >= 9) || (flag === -1 && effective >= 5)
+                         */ 
+                        if ((flag === 1 && effective >= 9) || (flag === -1 && effective >= 5)) {
+                            ++count;
+                        } else {
+                            negativeFlag = flag;
+                        }
+                        effective = 0;
                     }
                     ulEle.appendChild(liEle);
-                    absoluteTop = parseFloat(eleMine.style.top);
-                    absoluteTop = absoluteTop + (_y * _time * _time) * 100;
-                    document.getElementById('absAccY').innerHTML = _y * _time * _time;
-                    console.log(_y * _time * _time);
-                    absoluteTop = absoluteTop < 0 ? 0 : (absoluteTop > 100 ? 100 : absoluteTop);
-                    eleMine.style.top = absoluteTop + '%';
+                    document.getElementById('times').innerHTML = count;
                 }
-                // if (leftAcc) {
-                //     absoluteLeft = parseFloat(eleMine.style.left);
-                //     absoluteLeft = absoluteLeft + (0.5 * leftAcc);
-                //     absoluteLeft = absoluteLeft < 0 ? 0 : (absoluteLeft > 100 ? 100 : absoluteLeft);
-                //     eleMine.style.left = absoluteLeft + '%';
-                // }
         }, false);
+
+        // 清除加速度图表
+        eleMine.addEventListener('click', function (evt) {
+            ulEle.innerHTML = '';
+            count = 0;
+            document.getElementById('times').innerHTML = count;
+        }, false);
+
+
     </script>
 </body>
 </html>
