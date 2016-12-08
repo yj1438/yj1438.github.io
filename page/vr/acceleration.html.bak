@@ -34,7 +34,7 @@
         list-style: none;
         position: relative;
         left: 50%;
-        padding-bottom: 50vh;
+        padding-bottom: 4em;
         transform-origin: left top;
         transform: scale(.3);
     }
@@ -45,14 +45,6 @@
     }
     .negative {
         transform: translateX(-100%);
-    }
-    .info {
-        opacity: 0.8;
-        color: #eee6d7;
-        font-size: 12px;
-        position: fixed;
-        bottom: 30px;
-        left: 1em;
     }
     footer {
         position: fixed;
@@ -72,15 +64,28 @@
         <!--加速度柱形图-->
     </ul>
     <footer>
-        <span style="float: left;">点击屏幕任意位置复位</span>
+        <span style="float: left;">双击屏幕任意位置复位</span>
         <span style="float: right;">当前步数：<b id="times" style="font-size: 24px; vertical-align: middle;">0</b></span>
     </footer>
 
-    <div class="info">
+    <div id="mine" class="mine" style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10vw;
+        height: 12vw;
+        background: url(/img/avatar1.png) no-repeat;
+        background-size: cover;
+        background-position: center;
+        margin: -5vw 0 0 -6vw;
+        border: 1px solid red;
+    "></div>
+    
+    <div style="display: none;">
         <p>Y向加速度：<span id="_y"></span></p>
         <p>X向加速度：<span id="_x"></span></p>
         <p>Z向加速度：<span id="_z"></span></p>
-        <p style="display: none;">interval：<span id="interval"></span></p>
+        <p>interval：<span id="interval"></span></p>
     </div>
 
     <script>
@@ -95,9 +100,9 @@
         var ulEle = document.getElementById('diagram');
         window.addEventListener('devicemotion', function (evt) {
             // 控制时间片
-                var _x = evt.acceleration.x || 0,
-                    _y = evt.acceleration.y || 0,
-                    _z = evt.acceleration.z || 0;
+                var _x = evt.acceleration.x,
+                    _y = evt.acceleration.y,
+                    _z = evt.acceleration.z;
                 document.getElementById('_y').innerHTML = parseFloat(_y.toFixed(2));
                 document.getElementById('_x').innerHTML = parseFloat(_x.toFixed(2));
                 document.getElementById('_z').innerHTML = parseFloat(_z.toFixed(2));
@@ -118,7 +123,7 @@
                          *      不甩手走：effective >=7
                          *      甩手走：(flag === 1 && effective >= 9) || (flag === -1 && effective >= 5)
                          */ 
-                        if ((flag === 1 && effective >= 6) || (flag === -1 && effective >= 3)) {
+                        if ((flag === 1 && effective >= 9) || (flag === -1 && effective >= 5)) {
                             ++count;
                         } else {
                             negativeFlag = flag;
@@ -130,14 +135,13 @@
                 }
         }, false);
 
-        /*
-         * 清除加速度图表
-         */
-        document.body.addEventListener('click', function (evt) {
+        // 清除加速度图表
+        eleMine.addEventListener('click', function (evt) {
             ulEle.innerHTML = '';
             count = 0;
             document.getElementById('times').innerHTML = count;
         }, false);
+
 
     </script>
 </body>

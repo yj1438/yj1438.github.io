@@ -98,7 +98,7 @@ HTML5 接口中提供了一个获取设备旋转角度的接口：`deviceorienta
 * [三维方向旋转](/page/vr/3drotate.html)
 * [beta、gamma 角度重力掉落](/page/vr/gyroscope.html)
 
-(下一篇预告：[VR基础&页面级应用(2) --- 速度](#))
+(下一篇：[VR基础&页面级应用(2) --- 速度](/2016/12/07/vr_acceleration.html))
 
 ---
 
