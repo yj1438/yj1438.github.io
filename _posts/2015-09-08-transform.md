@@ -9,7 +9,7 @@ title: CSS3 transform 对HTML文档流带来的影响
 
 ## 来源于“硬件加速”
 
-很多网上文章都说建议打开浏览器的硬件加速，这样页面渲染速度、动画流畅性会提高。这几乎成了页面制作的标配，管实际有没有用都来一个：
+很多网上文章都说建议打开浏览器的硬件加速，这样页面渲染速度、动画流畅性会提高。这几乎成了很多人页面制作的标配，管实际有没有用都来一个：
 
 ~~~css
     body {
@@ -17,17 +17,17 @@ title: CSS3 transform 对HTML文档流带来的影响
     }
 ~~~
 
-但这在很多情况下会引起 html 层级文档流的“异常”。 [W3C spec](http://www.w3.org/TR/css3-2d-transforms/#transform-rendering) 中有如下描述: 
+但这在很多情况下会引起 html 层级文档流的“异常”。
+[W3C spec](http://www.w3.org/TR/css3-2d-transforms/#transform-rendering) 中有如下描述: 
 
 > In the HTML namespace, any value other than none for the transform results in the creation of both a stacking context and a containing block. 
 The object acts as a containing block for fixed positioned descendants.
 
 意思是：
-在 HTML 的命名空间内，没有比对一个即是层叠对象又是容器块的（DOM）产物进行 `transform` 变换更没有意义的了。
-这类对象一般扮演者 `positioned` 子孙元素容器的角色。
+在 HTML 内，没有比对一个即是层叠对象又是容器块的 DOM 进行 `transform` 变换更没有意义的了。
+这类对象也扮演着 `positioned`(主要是 absolute/fixed ) 子孙元素容器的角色。
 
 。。。翻译能力有限，不理解的人估计这句话看了后更晕，下面详述。
-
 
 ## 标准文档流
 
@@ -45,9 +45,9 @@ The object acts as a containing block for fixed positioned descendants.
 
 ~~~html
     <body>
-        <header style="position: fixed; top: 0;"></header>
+        <header style="position: fixed; top: 0; width: 100%; background: red;">header</header>
         <div style="height: 2000px;"></div>
-        <footer style="position: fixed; bottom: 0;"></footer>
+        <footer style="position: fixed; bottom: 0; width: 100%; background: blue;">footer</footer>
     </body>
 ~~~
 
@@ -69,14 +69,13 @@ body 加了 `transform` 属性以后，整个 `body` DOM 既会产生相应的�
 
 `fixed` 元素似乎变成了 `absolute`，存在于一个和`document.documentElement`大小一致的“透明”容器内。
 
-## 总结
-
-其实上面的情况不只会发生在 `body` 上，一个任意的 dom 添加了 `transform` 之后都会生产一个类似 viewport 的效果，有兴趣可以去尝试。
-
-## *同类情况
+## 引申情况
 
 在一些移动端设备(或APP)上，给 `<video>` 标签的播放默认开启的硬解码，此时也会产生上述现象，视频会"浮"在页面上面，不会随页面元素正常滚动。
 
+## 总结
+
+其实上面的情况不只会发生在 `body` 上，一个任意的 dom 添加了 `transform` 之后都会生产一个类似 viewport 的效果，有兴趣可以去尝试。
 
 
 

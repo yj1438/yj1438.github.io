@@ -34,7 +34,7 @@
     align-items: center;
     align-self: center;
     perspective: 1200px;
-    margin-top: 20vh;
+    margin-top: 25vh;
 }
 .stage {
     /*max-width: 400px;
@@ -45,7 +45,6 @@
     line-height: 240px;
     border: 1px solid red;
     transform-style: preserve-3d;
-    margin-top: 10%;
 }
 .stage section {
     position: absolute;
@@ -78,14 +77,6 @@
 </div>
 <script>
     (function () {
-        var calibration = false;            //是否已经校准
-        var maxAcceleration = {
-            x: 0,
-            y: 0,
-            z: 0
-        };
-        var flag_1 = 0;
-        var flag_2 = 0;
         window.addEventListener('deviceorientation', function (evt) {
             var x = evt.alpha,
                 y = evt.beta,
@@ -100,17 +91,7 @@
             document.getElementById('alpha').innerHTML = 'alpha: ' + x;
             document.getElementById('beta').innerHTML = 'beta: ' + y;
             document.getElementById('gamma').innerHTML = 'gamma: ' + z;
-            if (!flag_1) {
-                console.log(evt);
-                flag_1 = 1;
-            }
         }, false);    
-        /*
-        //
-        document.getElementById('mask_tip').addEventListener('click', function (evt) {
-            alert(maxAcceleration.x + '|' + maxAcceleration.y + '|' + maxAcceleration.z);
-        }, false);
-        */
     })();
 </script>
 </body>

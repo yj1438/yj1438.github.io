@@ -85,14 +85,12 @@
 
     <script>
         // 
-        var eleMine = document.getElementById('mine'),          //中间的DOM
-            _time = 50 / 1000,                      // 当前时间 
-            negativeFlag;
+        var ulEle = document.getElementById('diagram'),          //中间的DOM
+            _time = 50 / 1000,                      // devicemotion 轮询时间片，可以通过 evt.interval 获取
+            lastFlag,                               // 上一个下负标识的 flag
+            count = -1,                             // 计步数     
+            effective = 0;                          // 每一步有效帧数。
 
-        // TEST
-        var count = -1, effective = 0;
-
-        var ulEle = document.getElementById('diagram');
         window.addEventListener('devicemotion', function (evt) {
             // 控制时间片
                 var _x = evt.acceleration.x || 0,
@@ -102,15 +100,20 @@
                 document.getElementById('_x').innerHTML = parseFloat(_x.toFixed(2));
                 document.getElementById('_z').innerHTML = parseFloat(_z.toFixed(2));
                 document.getElementById('interval').innerHTML = evt.interval;
+                /*
+                 * 过滤微小的波动，以 0.55m/s^2 做为阀值
+                 */
                 if (Math.abs(_y) >= 0.55) {
                     var liEle = document.createElement('li'),
                         flag = 1;
                     liEle.style.width = Math.abs(_y) * 50 + 'px';
+                    // 加速度为负
                     if (_y < 0) {
                         liEle.classList.add('negative');
                         flag = -1;
                     }
-                    if (negativeFlag === flag) {
+                    // 判断是否连续有效，过滤掉一部分的抖动帧
+                    if (lastFlag === flag) {
                         ++effective;
                     } else {
                         /**
@@ -121,7 +124,7 @@
                         if ((flag === 1 && effective >= 6) || (flag === -1 && effective >= 3)) {
                             ++count;
                         } else {
-                            negativeFlag = flag;
+                            lastFlag = flag;
                         }
                         effective = 0;
                     }
