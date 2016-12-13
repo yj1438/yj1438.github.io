@@ -9,10 +9,12 @@ title: CSS3 transform 对HTML文档流带来的影响
 
 ## 来源于“硬件加速”
 
+年初的一个笔记，闲时整理出来。
+
 很多网上文章都说建议打开浏览器的硬件加速，这样页面渲染速度、动画流畅性会提高。这几乎成了很多人页面制作的标配，管实际有没有用都来一个：
 
 ~~~css
-    body {
+    html，body {
         transform: translate3d(0,0,0);
     }
 ~~~
@@ -35,7 +37,7 @@ The object acts as a containing block for fixed positioned descendants.
 
 想必大家对这个基础的定义已经很熟悉了吧。但是，这个究竟在实际中有什么体现呢？
 
-如果你在页面中放置一大堆 `display: inline-block` 的元素，它们会很乖巧的 **上 ->** **左 -> 右** 排的很整齐。这就是`标准文档流`的基础体现。
+如果你在页面中放置一大堆 `display: inline-block` 的元素，它们会很乖巧的 **上 -> 下** **左 -> 右** 排的很整齐。这就是`标准文档流`的基础体现。
 
 当你用`position`、`float`等属性使其脱离文档流时，就会又产生一个页面 `层级` 的概念。(扯远了...)
 
@@ -51,10 +53,12 @@ The object acts as a containing block for fixed positioned descendants.
     </body>
 ~~~
 
+[查看例子](/page/css_transform/example.html)
+
 大家都知道，dom 元素的默认定位属性是 `position: static;` 这也是标准文档流的标准定位方式。  
 例子中，不管 div 怎么上下滚动，header 和 footer 会永远置于屏幕的最上和最下部。
 
-但是如最初所述，给 `body` 加上一个 `transform: translate3d(0,0,0);`，你再去试，就会发现，原本 `position: fixed;` 的两个元素都不听话了，会随着屏幕进行滚动。
+但是如最初所述，给 `body` 或 `html` 加上一个 `transform: translate3d(0,0,0);`，你再去试，就会发现，原本 `position: fixed;` 的两个元素都不听话了，会随着屏幕进行滚动。
 
 实际上，`position: fixed;` 的参考对象并不是大家所说的屏幕，而是一个 `viewport` 的html对象，一般地一个页面(一个 `document.documentElement` 标签)会生成一个 viewport。
 
@@ -67,17 +71,20 @@ body 加了 `transform` 属性以后，整个 `body` DOM 既会产生相应的�
 
 这个 viewport 会严重影响 `position: fixed;` 的定位，当它随着“本尊”dom同步滚动的时候，会带着 `fixed` 元素一块滚，此时会产生一种类似 `absolute` 的诡异效果：
 
-`fixed` 元素似乎变成了 `absolute`，存在于一个和`document.documentElement`大小一致的“透明”容器内。
+`fixed` 元素似乎变成了 `absolute`，存在于一个和`document.documentElement`大小一致的“看不见”容器内。
 
 ## 引申情况
 
 在一些移动端设备(或APP)上，给 `<video>` 标签的播放默认开启的硬解码，此时也会产生上述现象，视频会"浮"在页面上面，不会随页面元素正常滚动。
 
+还有一些低版本移动端浏览器上，也会出现类似的情况，可按此思路尝试解决。
+
 ## 总结
 
 其实上面的情况不只会发生在 `body` 上，一个任意的 dom 添加了 `transform` 之后都会生产一个类似 viewport 的效果，有兴趣可以去尝试。
 
-
+> 引用
+[http://meyerweb.com/eric/thoughts/2011/09/12/un-fixing-fixed-elements-with-css-transforms/](http://meyerweb.com/eric/thoughts/2011/09/12/un-fixing-fixed-elements-with-css-transforms/)
 
 
 
