@@ -111,7 +111,7 @@ HTML5 接口中提供了一个获取设备加速度的接口：`devicemotion`。
 标题所谓的“干货”，只是一个不完整的加速度体验小例子。大家常把现成解决问题的东西叫做干货，但很多情况下的干货应该不仅于此。
 这类技术的干货实际是文中展示图所涉及的抽象模型，抽象空间的认知才是真正的“干货”。
 
-(下一篇预告：[VR基础&页面级应用(3) --- 场景](#))
+(下一篇预告：[VR基础&页面级应用(3) --- 场景基础](/2016/12/12/vr_scene_1.html))
 
 > 参照：  
 [1] [https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent)  
