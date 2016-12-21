@@ -42,6 +42,8 @@
             -webkit-box-direction: normal;
             -ms-flex-direction: column;
                 flex-direction: column;
+            perspective: 1600px;
+
         }
         .container {
             /*transform: translateZ(150px);*/
@@ -49,7 +51,7 @@
         }
         .stage {
             position: relative;
-            width: 300px;
+            width: 125px;
             height: 300px;
             line-height: 300px;
             border: 1px solid red;
@@ -65,6 +67,7 @@
             border: 2px solid #666;
             font-size: 100px;
             text-align: center;
+            transform: translateZ(450px) rotateY(0deg);
         }
         .stage .floor_ceil {
             background-color: rgba(33, 33, 33, .7)
@@ -143,12 +146,14 @@
     <div class="wrapper">
         <div class="container">
             <div class="stage">
-                <section class="floor_ceil" style="transform: rotateX(90deg) translateZ(150px);">天</section>
-                <section class="floor_ceil" style="transform: rotateX(-90deg) translateZ(150px);">地</section>
                 <section class="wall" style="transform: rotateY(0deg) translateZ(150px);">北</section>
-                <section class="wall" style="transform: rotateY(90deg) translateZ(150px);">东</section>
+                <section class="wall" style="transform: rotateY(45deg) translateZ(150px);">东</section>
+                <section class="wall" style="transform: rotateY(90deg) translateZ(150px);">南</section>
+                <section class="wall" style="transform: rotateY(135deg) translateZ(150px);">西</section>
                 <section class="wall" style="transform: rotateY(180deg) translateZ(150px);">南</section>
-                <section class="wall" style="transform: rotateY(270deg) translateZ(150px);">西</section>
+                <section class="wall" style="transform: rotateY(225deg) translateZ(150px);">西</section>
+                <section class="wall" style="transform: rotateY(270deg) translateZ(150px);">南</section>
+                <section class="wall" style="transform: rotateY(315deg) translateZ(150px);">西</section>
             </div>
         </div>
     </div>
@@ -195,50 +200,50 @@
             /*
              * 空间大小
              */
-            $('#sliderInput1').rangeslider({
-                polyfill: false,
-                onInit: function() {
-                    console.log('sliderInit');
-                },
-                onSlide: function(position, value) {
-                    $('.floor_ceil').css({
-                        width: value + 'px',
-                        height: value + 'px',
-                        top: '50%',
-                        left: '50%',
-                        marginTop: -(value / 2) + 'px',
-                        marginLeft: -(value / 2) + 'px',
-                    });
-                    $('.wall').css({
-                        width: value + 'px',
-                        top: '50%',
-                        left: '50%',
-                        marginTop: '-150px',
-                        marginLeft: -(value / 2) + 'px'
-                    }).each(function () {
-                        var _transform = this.style.transform.replace(/translateZ\((\d+)px\)/gi, 'translateZ(' + (value/2) + 'px)');
-                        this.style.transform = _transform;
-                        _transform = this.style.webkitTransform.replace(/translateZ\((\d+)px\)/gi, 'translateZ(' + (value/2) + 'px)');
-                        this.style.webkitTransform = _transform;
-                    });
-                    document.getElementById('sliderValue1').innerHTML = value;
-                }
-            }).val(600).change();
+            // $('#sliderInput1').rangeslider({
+            //     polyfill: false,
+            //     onInit: function() {
+            //         console.log('sliderInit');
+            //     },
+            //     onSlide: function(position, value) {
+            //         $('.floor_ceil').css({
+            //             width: value + 'px',
+            //             height: value + 'px',
+            //             top: '50%',
+            //             left: '50%',
+            //             marginTop: -(value / 2) + 'px',
+            //             marginLeft: -(value / 2) + 'px',
+            //         });
+            //         $('.wall').css({
+            //             width: value + 'px',
+            //             top: '50%',
+            //             left: '50%',
+            //             marginTop: '-150px',
+            //             marginLeft: -(value / 2) + 'px'
+            //         }).each(function () {
+            //             var _transform = this.style.transform.replace(/translateZ\((\d+)px\)/gi, 'translateZ(' + (value/2) + 'px)');
+            //             this.style.transform = _transform;
+            //             _transform = this.style.webkitTransform.replace(/translateZ\((\d+)px\)/gi, 'translateZ(' + (value/2) + 'px)');
+            //             this.style.webkitTransform = _transform;
+            //         });
+            //         document.getElementById('sliderValue1').innerHTML = value;
+            //     }
+            // }).val(600).change();
             /*
              * 视距的 slider
              */
-            $('#sliderInput2').rangeslider({
-                polyfill: false,
-                onInit: function() {
-                    console.log('sliderInit');
-                },
-                onSlide: function(position, value) {
-                    wrapperEle.style.perspective = value + 'px';
-                    containerEle.style.webkitTransform = 'translateZ(' + value + 'px)';
-                    containerEle.style.transform = 'translateZ(' + value + 'px)';
-                    document.getElementById('sliderValue2').innerHTML = value;
-                }
-            }).val(600).change();
+            // $('#sliderInput2').rangeslider({
+            //     polyfill: false,
+            //     onInit: function() {
+            //         console.log('sliderInit');
+            //     },
+            //     onSlide: function(position, value) {
+            //         wrapperEle.style.perspective = value + 'px';
+            //         containerEle.style.webkitTransform = 'translateZ(' + value + 'px)';
+            //         containerEle.style.transform = 'translateZ(' + value + 'px)';
+            //         document.getElementById('sliderValue2').innerHTML = value;
+            //     }
+            // }).val(600).change();
 
             /**
             * deviceorientation 事件绑定
