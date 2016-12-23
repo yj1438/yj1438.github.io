@@ -1,4 +1,8 @@
 http://yj1438.github.io
+http://yj1438.github.io/2016/11/24/vr_gyroscope.html
+http://yj1438.github.io/2016/12/07/vr_acceleration.html
+http://yj1438.github.io/2016/12/12/vr_scene_1.html
+http://yj1438.github.io/2016/12/21/vr_scene_2.html
 http://yj1438.github.io/2016/10/03/react_alert.html
 http://yj1438.github.io/2016/08/26/rn_navigator.html
 http://yj1438.github.io/2016/08/14/rn_sceneconfigs.html
