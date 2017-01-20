@@ -299,3 +299,16 @@ hr {
         font-size: 14px;
     }
 }
+
+table th, table td {
+    border-spacing: 0;
+    border-collapse: collapse;
+    padding: .5em 1.5em;
+}
+
+table th {
+    font-weight: bold;
+    text-align: center;
+}
+table td {
+}
