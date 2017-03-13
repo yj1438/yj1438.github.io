@@ -83,7 +83,7 @@ certbot 是自动获取证书的一个命令工具包，也是所有过程的前
 
 #### 自己站点的准备
 
-* 保证自己站内访问良好，http
+* 保证自己站内对外访问良好
 * 提供一个类似静态资源目录的对外可访问目录，如：/usr/www/static/，使得对外链接 www.your_web.com/aaa/bbb.js 可以访问到 /usr/www/static/aaa/bbb.js 文件
 
 #### 命令行获取

@@ -5,7 +5,7 @@ title: nodejs mysql 工具类
 
 # nodejs mysql 工具类
 
-这是笔者一直在用的一个 mysql 工具类，自己写的，简单实用。
+这次是个简单粗暴的干货，笔者写的一个 mysql 工具类，一直在用。
 
 ## 特征
 
