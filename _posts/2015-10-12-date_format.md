@@ -9,7 +9,7 @@ title: 靠谱的JS时间格式化方法
 以下提供一个日常中总结出来的很多用的时间格式化方法，可以将`Date`对象处理成自己想要的时间格式。
 
 ~~~javascript
- function dateFormat(date, fstr, utc) {
+function dateFormat(date, fstr, utc) {
     utc = utc ? 'getUTC' : 'get';
     return fstr.replace(/%[YmdHMS]/g, function (m) {
         switch (m) {
