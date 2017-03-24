@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>瀑布流式布局</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body, ul, li, p {
+                margin: 0;
+                padding: 0;
+            }
+            .flow-container {
+                position: relative;
+                background: #eee;
+            }
+            .flow-container li {
+                display: none;
+                position: absolute;
+                width: 23%;
+                margin: 5px .5%;
+                border: 1px solid #999;
+                vertical-align: top;
+                opacity: 0;
+                -webkit-transform: translate(0, 60px);
+                transform: translate(0, 60px);
+                -webkit-transition: all .3s ease-out;
+                transition: all .3s ease-out;
+            }
+            .flow-container li.show {
+                opacity: 1;
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="container" class="flow-container">
+        </ul>
+        <script>
+            (function (){
+                /**
+                 * 一些配置参数
+                 */
+                var COL = 4;            // 列数
+                var MARGIN_TOP = 5;     // 元素间距
+                var PAGE_SIZE = 30;     // 分页大小
+                var SHOW_DELAY = 30;    // 显示动画延时 ms
+                // 流式容器
+                var container = document.getElementById('container');
+                // 记录每列的当前堆积高度
+                var heightArr = [];
+                /**
+                 * ==========================
+                 * 主要方法
+                 */
+                function flowAction() {
+                    var eles = document.querySelectorAll('.flow-container li');
+                    var i = 0, ele;
+                    while (i < eles.length) {
+                        ele = eles[i];
+                        if (!ele.classList.contains('show')) {
+                            ele.style.display = 'block';
+                            if (i >= COL) {
+                                // 第二行开始
+                                // 取其中最短的一行
+                                var minHeight = Math.min.apply(null,heightArr);
+                                var index = heightArr.indexOf(minHeight);
+                                ele.style.left = index * (100 / COL) + '%';
+                                ele.style.top = minHeight + MARGIN_TOP + 'px';
+                                // 重置这一行的高度为现有高度
+                                heightArr[index] = heightArr[index] + MARGIN_TOP + ele.offsetHeight;
+                            } else {
+                                // 如果是第一行
+                                ele.style.left = i * (100 / COL) + '%';
+                                ele.style.top = 0 + 'px';
+                                // 初始化每行高度
+                                heightArr[i] = ele.offsetHeight;
+                            }
+                            (function (_ele, _i) {
+                                setTimeout(function () {
+                                    _ele.classList.add('show');
+                                }, SHOW_DELAY + _i * SHOW_DELAY);
+                            })(ele, i % PAGE_SIZE);
+                        }
+                        ++i;
+                    }
+                }
+
+                /**
+                 * 上拉加载更多
+                 */
+                window.addEventListener('scroll', function (evt) {
+                    if (document.documentElement.clientHeight + document.body.scrollTop > document.body.scrollHeight - 10) {
+                        init();
+                        flowAction();
+                    }
+                }, false);
+
+                /**
+                 * 自己造点假数据
+                 * 正式项目中不需要这步
+                 */ 
+                function init () {
+                    var num = 0,
+                        liEle,
+                        height;
+                    while (num < PAGE_SIZE) {
+                        liEle = document.createElement('li');
+                        liEle.innerText = num;
+                        height = Math.ceil(100 + 200 * Math.random());
+                        liEle.style.height = height + 'px';
+                        container.appendChild(liEle);
+                        ++num;
+                    }
+                }
+
+                init();
+                flowAction();
+                /**
+                 * 测试事件
+                 */
+                container.addEventListener('click', function (evt) {
+                    var target = evt.target;
+                    if (target.tagName.toLocaleLowerCase() === 'li') {
+                        console.log(target.offsetHeight + '====' + target.offsetTop);
+                    }
+                }, false);
+
+            })();
+        </script>
+    </body>
+</html>
