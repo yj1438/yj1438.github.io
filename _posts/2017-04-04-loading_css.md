@@ -129,7 +129,7 @@ CSS 会阻塞页面渲染，直到 `all-of-my-styles.css` 加载完成前，留�
 ~~~
 
 当每一个 `<link rel="stylesheet">` 加载的时候，阻塞它后面加载的(页面)部分，但是允许它渲染之前的部分。
-它们的加载是并行的，但是应用是串行的。这就使得 `<link rel="stylesheet"> 有点像 `<script src="…"></script>` 了。
+它们的加载是并行的，但是应用是串行的。这就使得 `<link rel="stylesheet">` 有点像 `<script src="…"></script>` 了。
 
 设想一下，站点的 header、article、footer CSS 都已经加载完毕，但其它部分样式正式传输，此时页面就是这样：
 

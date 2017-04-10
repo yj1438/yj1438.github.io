@@ -1,47 +1,37 @@
-github: {
-    "version": {},
-    "author": "yinjie",
-    "hostname": "https://github.com/yj1438/",
-    "pages_hostname": "http://yj1438.github.io/"
-}
-#source: ./
-#destination: ./_site
-#plugins: ./_plugins
-safe: true
+# Site Settings
+title:               Yinjie's github
+tagline:             A personal tech notes site
+description:        
+baseurl:             ""
+url:                #"https://lenpaul.github.io"
+github:
+  url:               "https://github.com/yj1438/"
+  io_url:            "https://yj1438.github.io/"
+author:
+  name:              "Yin Jie"
+  email:             "yj1438@163.com"
+  github:            "https://github.com/yj1438/"
+navigation:
+- title: About
+  url: /about
+- title: Writing
+  url: /writing
+- title: Contact
+  url: /contact
 
-# Conversion
-#highlighter: pygments
-highlighter: rouge
+paginate:            20
+disqus:              #"your-disqus"
 
-gist:
-   noscript: false
-
-#markdown: rdiscount
-#rdiscount:
-#   extensions:
-#     - footnotes
-markdown: kramdown
-
+# Build settings
+markdown:            kramdown
 kramdown:
     input: GFM
     hard_wrap: false
     math_engine: mathjax
-# kramdown:
-#   auto_ids:       true
-#   footnote_nr:    1
-#   entity_output:  as_char
-#   toc_levels:     1..6
-#   smart_quotes:   lsquo,rsquo,ldquo,rdquo
-#   enable_coderay: true
 
-#   coderay:
-#     coderay_wrap:              div
-#     coderay_line_numbers:      inline
-#     coderay_line_number_start: 1
-#     coderay_tab_width:         4
-#     coderay_bold_every:        10
-#     coderay_css:               style
-    
+highlighter:         rouge
+permalink:           none
+
 lsi: false
 excerpt_separator: "\n\n\n\n"
 incremental: false
@@ -50,10 +40,8 @@ incremental: false
 detach: false
 port: 4000
 host: 0.0.0.0
-baseurl: "" # does not include hostname
 
 encoding: "utf-8"
 markdown_ext: markdown,mkd,mkdn,md
 
-#plugins
-#gems: [jekyll-less]
+gems:                [jekyll-paginate]

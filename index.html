@@ -1,12 +1,35 @@
 ---
-layout: homepage
-title: Yinjie的首页
+layout: default
+title: Home
 ---
-        <h2>最新文章</h2>
-        {% for post in site.posts %}
-        <h3><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a><span class="date" style="float: right;">{{post.date | date_to_string}} </span></h3>
-        {% endfor %}
-        <h3><a href="page/flexbox/index1.html">Flexbox构建响应式图片</a><span class="date" style="float: right;">18 Oct 2015 </span></h3>
-        <h3><a href="page/flexbox/index2.html">基于Flex的简单磁贴式布局</a><span class="date" style="float: right;">18 Oct 2015 </span></h3>
-        <h3><a href="page/flexbox/index3.html">基于Flex的简单响应式 Grid 布局</a><span class="date" style="float: right;">18 Oct 2015 </span></h3>
-        <h3><a href="https://scotch.io/demos/visual-guide-to-css3-flexbox-flexbox-playground" target="_blank">Flexbox 属性演示</a></h3>
+
+{% for post in paginator.posts %}
+<div class="posts">
+  <h1>
+    <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+  </h1>
+  {% if post.image.teaser %}
+    <a href="{{ site.baseurl }}{{ post.url }}"><img src="{{ site.baseurl }}/images/{{ post.image.teaser }}"></a>
+  {% endif %}
+  <p>
+    {{ post.content | strip_html | truncate: 100 }} <a href="{{ site.baseurl }}{{ post.url }}">Read more</a>
+    <span class="post-date" style="margin-top:3px"><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | date_to_string }} - <i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</span>
+  </p>
+</div>
+{% endfor %}
+
+<!-- Pagination links -->
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-button pagination-active" href="{{ site.baseurl }}{{ paginator.next_page_path }}" class="next">Older</a>
+  {% else %}
+    <span class="pagination-button">Older</span>
+  {% endif %}
+
+  {% if paginator.previous_page %}
+    <a class="pagination-button pagination-active" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">Newer</a>
+    {% else %}
+      <span class="pagination-button">Newer</span>
+  {% endif %}
+
+</div>
