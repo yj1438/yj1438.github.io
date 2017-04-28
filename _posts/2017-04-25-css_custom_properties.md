@@ -165,7 +165,7 @@ js 中的闭包可以对外暴露一个 function 的变量/属性 --- 作用域�
 * 外部方法的变量
 * 全局变量
 
-~[img1](https://www.smashingmagazine.com/wp-content/uploads/2017/03/closure-780w-opt.png)
+![img1](https://www.smashingmagazine.com/wp-content/uploads/2017/03/closure-780w-opt.png)
 
 这意味着，在 sass 中，变量的作用域很大程度上依赖于代码的上下文结构。
 
