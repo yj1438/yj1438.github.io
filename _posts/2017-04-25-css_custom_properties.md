@@ -167,6 +167,18 @@ js 中的闭包可以对外暴露一个 function 的变量/属性 --- 作用域�
 
 ![img1](https://www.smashingmagazine.com/wp-content/uploads/2017/03/closure-780w-opt.png)
 
+预处理器在这类情况大多是一致的，在这里用 sass 举例，是因为它应该是目前最受欢迎的 css 预处理器。
+
+sass 中，有两类变量：local and global。
+
+一个全局变量可以被声明在任意选择器区块的外面，否则，这个变量就是本地的。
+
+任何一个嵌套的代码块都可以访问闭包作用域内的变量（同 javascript）;
+
+![img2](https://www.smashingmagazine.com/wp-content/uploads/2017/03/closure-scss-780w-opt.png)
+
+一个全局的变量可以被定义在选择器块作用域的
+
 这意味着，在 sass 中，变量的作用域很大程度上依赖于代码的上下文结构。
 
 但 css 自定义属性默认是继承的，和 css 一样，也是级联的。
@@ -209,6 +221,39 @@ css:
 呈现结果：
 
 [http://codepen.io/malyw/pen/MJmebz](http://codepen.io/malyw/pen/MJmebz)
+
+### 预处理器不会知道 dom 的结构
+
+假设我们想使用 `default` 的 font-size，如果有 `highlighted` 类，就用它的默认字体来突出显示。
+
+html:
+
+~~~html
+<div class="default">
+  default
+</div>
+
+<div class="default highlighted">
+  default highlighted
+</div>
+~~~
+
+css: 
+
+~~~css
+.highlighted {
+  --highlighted-size: 30px;
+}
+
+.default {
+  --default-size: 10px;
+
+  /* Use default-size, except when highlighted-size is provided. */
+  font-size: var(--highlighted-size, var(--default-size));
+}
+~~~
+
+因为第二段 html 的 `default` 携带着 `highlighted`，
 
 (好，大家首次直观感觉到 css 自定义属性的能力，下周继续...)
 
