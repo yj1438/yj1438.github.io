@@ -157,7 +157,7 @@ eg:
 
 我们知道，js `var` 的变量的作用域被限制在它所在的 function 中。
 
-`let` 和 `const` 性质也是类似的，不过它拉都是块级变量。
+`let` 和 `const` 性质也是类似的，不过它们都是块级变量。
 
 js 中的闭包可以对外暴露一个 function 的变量/属性 --- 作用域链。js 闭包有三个作用域链：
 
@@ -253,7 +253,73 @@ css:
 }
 ~~~
 
-因为第二段 html 的 `default` 携带着 `highlighted`，
+因为第二段 html 的 `default` 携带着 `highlighted`，其中的 `highlighted` properties 就可以通过 var 表达式应用在 element 中。
+
+在这个例子中，`--highlighted-size: 30px;` 是生效的，这样反过来可以将设定好的某一个值(如: `--highlighted-size`)应用在 `font-size` 上。
+
+这些都是那么的直接了当：
+
+[http://codepen.io/malyw/pen/ggWMvG](http://codepen.io/malyw/pen/ggWMvG)
+
+~~~css
+.highlighted {
+  $highlighted-size: 30px;
+}
+
+.default {
+  $default-size: 10px;
+
+  /* Use default-size, except when highlighted-size is provided. */
+  @if variable-exists(highlighted-size) {
+    font-size: $highlighted-size;
+  }
+  @else {
+    font-size: $default-size;
+  }
+}
+~~~
+
+再来看 sass 的这个例子：
+
+[http://codepen.io/malyw/pen/PWmzQO](http://codepen.io/malyw/pen/PWmzQO)
+
+出现这种情况，是因为所有的 Sass 计算和处理都在编译时发生，当然，它完全不依赖于代码的结构，也不了解DOM的结构。
+
+这样看来，“自定义属性” 有一个更高级的变量作用域，给通常的 css 级联属性增加了一种情况，它会自行识别 dom 的结构并遵循 css 应用的规则。
+
+**css 自定义属性可以识别 dom 结构，并且是动态的**
+
+## CSS-WIDE 关键字和 `all` 属性
+
+css 自定义属性遵循和传统的 css 属性一样的规则。这意味着你可以给它定义任意常规的 css 属性关键字：
+
+* `inherit` 继承其父元素某一属性值的关键字
+* `initial` 应用某一属性的初始值，（可能是一空值、或是其它 css 属性默认的值）
+* `unset` 当一个属性默认是继承父元素的属性值时，它使用继承的值；如是属性不继承的话，就使用其默认的值
+* `revert` 它可以将一属性值重置为用户 stylesheet 样式表中的值，(在 css 自定义属性中一般是空值)
+
+eg:
+
+~~~css
+.common-values{
+  --border: inherit;
+  --bgcolor: initial;
+  --padding: unset;
+  --animation: revert;
+}
+~~~
+
+我们再设想一种情况，你想要做一个 css 组件，来确认一下某一元素有没有其它的属性、或是是否无意中将一些自定义属性应用到上面了。(这种情况下，通常会使用一个模块化的解决方案)
+
+现在我们有了另一种方法：使用 `all` [CSS property](https://developer.mozilla.org/en/docs/Web/CSS/all)。这是将全部属性都 `reset` 的一种简写。
+
+这样，我们可以这样写了：
+
+~~~css
+.my-wonderful-clean-component{
+  all: initial;
+}
+~~~
 
 (好，大家首次直观感觉到 css 自定义属性的能力，下周继续...)
 
