@@ -524,6 +524,109 @@ body:after {
 }
 ~~~
 
+## 浏览器测试情况
+
+从目前来看， css 自定义协议可以[支持多数的主流浏览器](http://caniuse.com/#feat=css-variables)：
+
+![img](https://www.smashingmagazine.com/wp-content/uploads/2017/04/css-variables-large-opt.png)
+
+你可以直接原生使用了。
+
+如果你需要支持老的浏览器，可以学习一下它的语法和示例，用切换 css 或使用相关预处理器的方法来使用它。
+
+当然，我们需要检测一下 css 和 js 中的支持，以便提供降级和增强的功能。
+
+这个对 css 来说其实相当简单，我们可以用 `@supports` 条件语法来判断：
+
+~~~css
+@supports ( (--a: 0)) {
+  /* supported */
+}
+
+@supports ( not (--a: 0)) {
+  /* not supported */
+}
+~~~
+
+在 js 中，你可以用 `CSS.supports()` 方法来检测此的特征： 
+
+~~~javascript
+const isSupported = window.CSS &&
+    window.CSS.supports && window.CSS.supports('--a', 0);
+
+if (isSupported) {
+  /* supported */
+} else {
+  /* not supported */
+}
+~~~
+
+如你所见， css 自定义属性不是支持每一个浏览器的。我们可以渐进式的在支持这些特性的浏览器中使用它来增强你的应用。
+
+例如：你制作两个 css 文件，一个用 css 自定义属性，一个不用，在这种方法中，属性是内联方式，我们将在下来的内容中讨论它。
+
+~~~html
+<!-- HTML -->
+<link href="without-css-custom-properties.css"
+    rel="stylesheet" type="text/css" media="all" />
+~~~
+
+~~~javascript
+// JavaScript
+if(isSupported){
+  removeCss('without-css-custom-properties.css');
+  loadCss('css-custom-properties.css');
+  // + conditionally apply some application enhancements
+  // using the custom properties
+}
+~~~
+
+这只是个示例，下面会介绍一个更优的方法。
+
+## 如何使用它们
+
+在最近的调查中， sass 依旧是开发社区中首选的 css 预处理器。
+
+所以，我们设计一种方法，在 sass 中使用 css 的自定义属性。
+
+### 1. 手动检查支持情况
+
+手动检查代码中是否支持自定义属性的方法，优点是它可以立即生效（不要忘了我们已经切换到Sass）
+
+~~~css
+$color: red;
+:root {
+  --color: red;
+}
+
+.box {
+  @supports ( (--a: 0)) {
+    color: var(--color);
+  }
+  @supports ( not (--a: 0)) {
+    color: $color;
+  }
+}
+~~~
+
+这种方法也存在许多的坑：代码会变得非常复杂，复制、粘贴的代码会造成不易维护。
+
+### 2. 使用一个插件来自动生成 css
+
+`PostCSS` 现在已经给我们提供了许多的插件，这此插件中有几个都会在过程中处理 css 自定义属性（内联的），正确输出使它们工作。
+假设你仅提供全局变量(例如：你只是在 `:root` 选择符中声明或改变了 css 自定义属性)，这样它们的值可以被轻松内联。
+
+[例子：postcss-custom-properties](https://github.com/postcss/postcss-custom-properties)
+
+插件的方法有几个优点：它支持相关语法，而且支持所有 `PostCSS` 的基础功能，而且不用太多的配置。
+
+也存在几个缺点：插件需要你使用 css 自定义属性，因此你也没有准备另一个路径来切换 sass 变量。
+你也不法对变换进行完全的控制，因为这些只能是在编译成 css 之后。而且插件也无法提供足够的调试信息。
+
+### 3. css-vars 混合器
+
+
+
 (篇幅过长，下周继续。。。)
 
 
