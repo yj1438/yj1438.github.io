@@ -625,8 +625,70 @@ $color: red;
 
 ### 3. css-vars 混合器
 
+在我之前的大量项目中尝试了许多的 css 样式策略后，我开始使用 css 自定义属性。
 
+* 从 sass 转到  postcss（cssnext）
+* 从 sass 变量彻底转到 css 自定义属性变量
+* 在 sass 中使用 css 变量，检测它是否被支持
 
-(篇幅过长，下周继续。。。)
+从以上经验中，我得到了一个基本满足我需要的解决方案：
+
+* 开始使用 sass 应该容易上手
+* 用来起没那么多步骤，语法也尽可能的接近原生的语法
+* 将 css 的输出从 inline 模式切换到 css 变量应该非常容易
+* 熟悉 css 自定义属性的团队可以直接使用
+* 对于所用变量的边界值问题应该有调试方法
+
+对此，我创建了 css-vars，一个 sass minin，你可以去[这里找到](https://github.com/malyw/css-vars)。
+有了它，就可以直接使用 css 自定义属性语法了。
+
+## 使用 css-vars Mixin
+
+声明变量如下：
+
+~~~css
+$white-color: #fff;
+$base-font-size: 10px;
+
+@include css-vars((
+  --main-color: #000,
+  --main-bg: $white-color,
+  --main-font-size: 1.5*$base-font-size,
+  --padding-top: calc(2vh + 20px)
+));
+~~~
+
+使用变量如下：
+
+~~~css
+body {
+  color: var(--main-color);
+  background: var(--main-bg, #f00);
+  font-size: var(--main-font-size);
+  padding: var(--padding-top) 0 10px;
+}
+~~~
+
+这个 mixin 给帮助你从一个地方（from sass）来控制所有 css 输出，并且熟悉其语法。而且，你还可以利用 sass 的语法和变量。
+
+当你项目需求的所有的浏览器都支持 css 变量时，只需要加上这个句：
+
+~~~css
+$css-vars-use-native: true;
+~~~
+
+这样的话：
+
+* 一个变量定义了没有被使用，会报日志
+* 变量被重复定义，会报日志
+* 所用的变量没有定义，而是传了一个默认值，会的信息提示
+
+## 总结
+
+到这里，你也应该了解了 css 自定义属性，包括它们的语法、它的高级特性，一些很好的使用例子，和如何结合 js 去使用它。
+
+你也学会了如何检测设备是否支持它，它和一般的 css 预处理器有什么不同，如何在跨浏览器支持的情况下使用原生的 css 变量。
+
+现在是一个学习 css 自定义属性很好的时间，为以后浏览器原生支持做好准备。
 
 
