@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 是时候开始用 CSS 自定义属性了
+title: 【翻译】是时候开始用 CSS 自定义属性了
 published: true
 categories: 翻译 CSS
 tags: css
