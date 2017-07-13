@@ -200,7 +200,9 @@ js 的 loader 配置：
 
 ![3.png](/img/bundle_loader/3.png)
 
-是不是和想像的一样~~~， 在我们需要这个组件的时候它跑来。
+> 注意：笔者环境下 `index` 也是懒加载的，所以有 `1.index.app.js` 这个东西，按文中结果是没有的。
+
+是不是和想像的一样~~~， 在我们需要这个组件的时候它跑来（*.lazy_lazyComponent.js）。
 
 > 下一篇中，再介绍一下 **bundle-loader** 在 webpack.config.js 中的配置使用，和在 `react-router` 中的结构化实现，这个实用性更高哦。
 
