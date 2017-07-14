@@ -46,9 +46,13 @@ react 中使用它稍有点抽象，我在之前两篇博文简单介绍了“�
 * react component 也是一个函数（这样仅有助于理解）；
 * react jsx 标签也可以是一个动态变量；
 
-然后再去看一下官方的这篇讲 react 高阶函数的文章：[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html)。没看明白不要紧，建议看完我这一篇再回去看一篇。
+然后再去看一下官方的这篇讲 react 高阶函数的文章：[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html)。没看明白不要紧，建议看完我这一篇再回去看。
 
-先来说一下我的实现思路，`bundle-loader` 加载来的内容不能直接使用（看“基础用法”一章），需要我们封装一个方法这是必需的，借此可以写一个统一的 react-lazyloader 组件作为此类组件的入口，这样来实现按需加载。
+### 实现思路
+
+`bundle-loader` 加载来的内容不能直接使用（看“基础用法”一章），需要我们封装一个方法这是必需的，借此可以写一个统一的 react-lazyloader 组件作为此类组件的入口，这样来实现按需加载。
+
+### demo
 
 demo 设定三个文件：
 
@@ -56,7 +60,7 @@ demo 设定三个文件：
 * common/**lazyloader.jsx**：加载器
 * components/**lazyComponent.jsx**：需要懒加载的组件
 
-### lazyComponent.jsx
+#### lazyComponent.jsx
 
 ~~~javascript
 import React, { Component } from 'react';
@@ -78,7 +82,7 @@ export default LazyComponent;
 
 很普通的一个 react 组件，不用在意。
 
-### index.jsx
+#### index.jsx
 
 ~~~javascript
 import React, { Component } from 'react';
@@ -104,14 +108,7 @@ export default Index;
 
 `index.jsx` 中，我们引入了需要加载的组件 `LazyComponent` 和相应的加载器 `LazyLoader`，通过它来对 `LazyComponent` 进行按需加载。
 
-~~~javascript
-LazyLoader.propTypes = {
-    component: ReactComponent.isRequire,      // 要加载的组件
-    ...props: {any}                           // 组件的属性 props
-}
-~~~
-
-### lazyloader.jsx
+#### lazyloader.jsx
 
 ~~~javascript
 import React, { Component } from 'react';
@@ -163,6 +160,11 @@ class LazyLoader extends Component {
     }
 }
 
+LazyLoader.propTypes = {
+    component: ReactComponent.isRequire,      // 要加载的组件
+    ...props: {any}                           // 组件的属性 props
+}
+
 export default LazyLoader;
 ~~~
 
@@ -172,7 +174,7 @@ export default LazyLoader;
 
 最后我们来验证一下结果是否可行。
 
-js 的 loader 配置：
+* js 的 loader 配置：
 
 ~~~javascript
 {
@@ -186,17 +188,17 @@ js 的 loader 配置：
 },
 ~~~
 
-先看页面结果： 
+* 先看页面结果： 
 
 ![1.png](/img/bundle_loader/1.png)
 
 没问题。重要的是 js 的加载情况：
 
-### `index.jsx` debugger 执行前：
+* index.jsx debugger 执行前：
 
 ![2.png](/img/bundle_loader/2.png)
 
-### `index.jsx` debugger 执行后：
+* index.jsx debugger 执行后：
 
 ![3.png](/img/bundle_loader/3.png)
 
@@ -204,6 +206,6 @@ js 的 loader 配置：
 
 是不是和想像的一样~~~， 在我们需要这个组件的时候它跑来（*.lazy_lazyComponent.js）。
 
+---
+
 > 下一篇中，再介绍一下 **bundle-loader** 在 webpack.config.js 中的配置使用，和在 `react-router` 中的结构化实现，这个实用性更高哦。
-
-
