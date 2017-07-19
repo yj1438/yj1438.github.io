@@ -3,7 +3,7 @@ layout: post
 title: GitHub Pages（Jekyll + markdown + less）
 ---
 
-> 2016.5.1 后，github page 有较大的更新，以下文章不再完全适用，各为可以直接去官方配置站点查看。
+> 2016.5.1 后，github page 有较大的更新，以下文章不再完全适用，各为可以直接去官方配置站点查看, 这个很正确。
 [https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
 
 
