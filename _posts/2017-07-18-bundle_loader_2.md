@@ -8,7 +8,7 @@ tags: react bundle
 
 # bundle-loader 实现 react 按需加载(二)
 
-上篇博文中，以 react 为例，简单介绍了一下 `bundle-loader` 这个加载器在处理一些需要分离出去的模块时带给我们的便利。
+上篇中，以 react 为例，简单介绍了一下 `bundle-loader` 这个加载器在处理一些需要分离出去的模块时带给我们的便利。
 按官方文档的基本用法，我们已经针对某一个引用的模块实现了按需加载。
 
 ## 问题缺陷
@@ -17,7 +17,7 @@ tags: react bundle
 比如在 react 中又得引入一个自制的加载器，还得将原来的 component 放入 加载器标签中使用。
 总体上对代码的改动较大，而且不兼容非按需加载的情况，这是不留退路啊。
 
-这种事咱们得谨慎点才好，一处两处用或是只针对一两个特殊 component 用还好(如：重量级的富文本editor，视频组件等)，要是用在其它业务代码上就不太好了。
+这种事咱们得谨慎点，一两处或是只针对某个特殊 component (如：重量级的富文本editor，视频组件等)用还好，要是用在其它业务代码上就不太好了。
 
 ## webpack.config 中配置 bundle-loader
 
@@ -56,11 +56,13 @@ import LazyComponent from './components/lazyComponent.jsx';
 ~~~
 app
   - routers        // router component文件夹，里面都各业务页面的入口文件
+      index.jsx
+      detail.jsx
   router.jsx      // router 配置文件
   app.jsx         // app 入口文件
 ~~~
 
-在这样比较合理的文件规划下，我们就可以经非常小的业务代码改动实现具有一定设计感的按需加载文案，还不是用到哪写到哪。
+在这样比较合理的文件规划下，可以以非常小的业务代码改动实现具有一定设计感的按需加载方案，而不是用到哪写到哪。
 
 ### 关键配置/代码
 
@@ -82,23 +84,105 @@ app
 ~~~
 
 加入一个 `bundle-loader` 的配置项，当然 `include` 是关键，只将路由入口页面进行隔离。
+但是引入后这些各业务的入口页面也都从正常的 react component 变成了一个异步的方法，在使用上也需要改变了。
 
-如此一来，我们在引用时可以少去 `bundle-loader!` 这个前置 loader，和正常情况一样用法，但是引用后的对象还是得像基础用法那样改造。
+#### router.jsx
+
+使用 `bundle-loader` 之前，router.jsx 内容：
 
 ~~~javascript
-var load = require("./lazy_module/lazyModule.js");
-var moduleA = require("./module/moduleA.js");
+// 一般 react-router 的形式
+import Index from './routers/index';
+import Detail from './routers/detail';
 
-// The chunk is not requested until you call the load function
-load(function(module) {
-  // module is lazyModule
-});
-
-console.log(moduleA)     // moduleA is also regular module as you know
+<Router>
+  <Route path="/">
+    <Route path="index.html" component={Index} />
+    <Route path="detail.html" component={Detail} />
+  </Route>
+</Router>
 ~~~
 
-在使用这种用法之前一定要按业务需求先对整个框架的组织、文件结构进行合理规划，想清楚哪些 module 是需要被按需加载的，
-我在配置中写了一个 `include: /\/lazy_module\//` 也是这个意思， 必尽“按需加载”这个需求在单页中是双刃刀，有利有弊的。
+使用 `bundle-loader` 之后，`Index`、`Detail` 已经是一个回调方法，如上使用自然不行，不过 react-router 本身就支持[动态路由](https://github.com/ReactTraining/react-router/blob/v2.8.1/docs/API.md#getcomponentsnextstate-callback)。
+我们可以借用它的功能，很优雅的、绿色环保的实现页面业务js的按需加载。
 
-而且，因为 bundle-loader 加载的 module，在使用上也需要改动，所以建议自己封装一个 load 作为此类 module 的加载统一入口，最好能兼容两种情况，
-这样也更易维护。比如可以用 promise 抹平使用层面上代码形式，做到使用上的透明。
+改造后：
+
+~~~javascript
+import Index from './routers/index';
+import Detail from './routers/detail';
+
+/**
+ * 返回 getComponent 对应的方法
+ */
+const loadComponent = function(component) {
+  return function (nextState, cb) {
+    return component(function (com) {
+      return cb(null, com);
+    });
+  }
+}
+
+<Router>
+  <Route path="/">
+    <IndexRoute getComponent={loadComponent(Index)} />
+    <Route path="index.html" getComponent={loadComponent(Index)} />
+    <Route path="detail.html" getComponent={loadComponent(Detail)} />
+  </Route>
+</Router>
+~~~
+
+这样，我们就可以比较优雅的搞定此功能。
+
+### 执行效果
+
+加载 `/index.html` 时：
+
+![5.png](/img/bundle_loader/5.png)
+
+加载 `/detail.html` 时：
+
+![4.png](/img/bundle_loader/4.png)
+
+其中的 `1.index.app.js`、`3.detail.app.js` 就是按需打包出来的业务 js。完全符合我们需求。
+
+### 完善优化
+
+以上虽成功了，但有一个问题还需要解决：
+
+我们一共改过了两个地方，`webpack` 配置是添加上的，对原来的代码没有太大影响，但是在 router 里代码改动较大，而且没有退路，这样一刀切、颠覆式的改造是有维护风险的，至少我们要优化成兼容方式：
+
+~~~javascript
+import Index from './routers/index';
+import Detail from './routers/detail';
+
+// 判断当前 component 的类型
+function isReactComponent(obj) {
+  return Boolean(obj && obj.prototype && Boolean(obj.prototype.isReactComponent));
+}
+
+/**
+ * 根据 component 的加载类型，判断用哪种方式去加载 router
+ */
+const loadComponent = function(component) {
+  return isReactComponent(component) ?
+    {component: component} :
+    {getComponent: function (nextState, cb) {
+        return component(function (com) {
+          return cb(null, com);
+        });
+      }
+    }
+}
+
+<Router>
+  <Route path="/">
+    <IndexRoute {...loadComponent(Index)} />
+    <Route path="index.html" {...loadComponent(Index)} />
+    <Route path="detail.html" {...loadComponent(Detail)} />
+  </Route>
+</Router>
+~~~
+
+这里用了一个解构方法，来对 `Route` 标签进行参数传递。
+这样就Ok了，去掉 webpack.config 中 `bundle-loader` 配置也照样好使。
