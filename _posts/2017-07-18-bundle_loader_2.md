@@ -1,7 +1,7 @@
 ---
 layout: post
 title: bundle-loader 实现 react 按需加载(二)
-published: false
+published: true
 categories: 技术文章
 tags: react bundle
 ---
