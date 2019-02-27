@@ -1,6 +1,6 @@
 ---
 layout: post
-title: WebAssembly 浅度介绍
+title: WebAssembly 浅度介绍 --- 基础介绍
 published: false
 categories: 技术文章
 tags: WebAssembly
@@ -10,7 +10,7 @@ tags: WebAssembly
 
 <img src="/img/wa/img0.jpg" style="width: 200px;"/>
 
-## 背景
+## 一. 背景
 
 > web 技术又来搞事情了~
 
@@ -39,7 +39,7 @@ WebAssembly 的出现就是为了解决以上问题，突破语言边界，在�
 * wa 不仅是一项具体技术，更是一个技术标准，它约定了最后产出的字节码编码规范 --- wasm，对于生成这类字节码的语言不做限制。
 * 这种字节码类似汇编语言的机器码，在 wa 引擎中可以直接执行，省去了翻译、编译等主要影响性能的过程，所以在性能上几乎等同于编译型语言，也有很好的平台通用性。
 
-## wasm 在目前能做什么
+## 二. wasm 在目前能做什么
 
 看了上面官方的 High-Level Goals，有点高远，还是有点不大明白。在实际的 web 前端业务中，它有什么优势呢。
 
@@ -59,7 +59,49 @@ wasm 作为一种底层码，运行效率和底层支持是优势，从目前的
 要扬长避短，和任何一个系统的划分思路一样，抽象出**纯逻辑实现**模块和**页面业务控制**，逻辑运算部分交给 wasm，页面功能还是 js。
 借助 wasm 的优势对 js 业务进行优化。
 
-## 语言支持
+## 三. 性能对比
+
+性能是 wa 目前最大的优势，这也引起不少人的好奇心，下面通过一个笔者的 demo 具体看一下。
+
+### demo 设计
+
+demo 要突出 wasm 在逻辑运算上的优势，也要保证最终成果是落在 web 页面上：图片滤镜处理的场景非常适合。
+
+选一张尺寸足够大的图片，对超高的分辨率的每个像素点进行计算可以放大两者间的差距。最终将计算结果在页面里通过 canvas 写入图片中。
+
+* 图片尺寸：3840 * 2160，共用 8294400 个像素点；
+* 滤镜算法：灰度滤镜(不存在运算，只有内存赋值)，卡通画滤镜(运算复杂度 3n)；
+* 直接修改像素列表元素值，不产生新的列表(内存))。
+
+#### 灰度
+
+|平台|wasm|js|性能提升|
+| - | - | - | - |
+| pc chrome v69| 48ms | 1280ms | 26x |
+| android chrome v68 | 275ms | 7195ms | 26x |
+| ios v11.4 | 158ms | 2320ms | 14.68x |
+| alipay v10.1.35 android uc4_2.0 chrome v57| 9840ms | 18924ms | 1.92x |
+| alipay v10.1.35 ios v11.4 WKwebview| 156ms | 2400ms | 15.38x |
+
+#### 卡通画
+
+|平台|wasm|js|性能提升|
+| - | - | - | - |
+| pc chrome v69| 48ms | 1461ms | 26x |
+| android chrome v68 | 425ms | 7280ms | 26x |
+| ios v11.4 | 190ms | 2350ms | 14.68x |
+| alipay v10.1.35 android uc4_2.0 chrome v57| 9887ms | 34828ms | 1.92x |
+| alipay v10.1.35 android uc4_2.0 chrome v57 p20| 4790ms | 8240ms | 1.92x |
+| alipay v10.1.35 ios v11.4 WKwebview| 189ms | 2680ms | 15.38x |
+
+### 结论
+
+如上数据统计，wa 的性能因根本体质的改变，在运行效率上有非常大的提升。
+在性能越好的平台优势越大，充分得用了平台的三件性能，包括内存存取和逻辑运算上。
+
+> 完整 demo 代码会在最后给出。
+
+## 四. 语言支持
 
 上面有提到，wasm 实际是一套编译后字节码标准，具体编写的语言不限，目前除了官方主推的 C/C++ 语言外，Rust、Kotlin、go、Assemblyscript 都可以开发 wasm。
 
@@ -96,32 +138,50 @@ else
 end
 ```
 
+看起来也很像汇编，下一篇中，以 C、Assemblyscript 两种语言为例，具体介绍一下 wa 的实现，和其中的不少问题。
+
+（完）
+
+
+
+
+
+
+
+
+
+
+
+
+
 语法编写上不再介绍，从源码的编写，到最后使用在浏览器中，需要进行以下的过程：
 
 1. 编译，每种语言都有自己的一套编译环境和工具，将源码编译成字节码文件；
-2. 胶水 js 代码，通过它来帮助控制 wasm 在 js 环境中运行所必要的环境支持、内存控制、方法传递等；
+2. 胶水 js 代码，通过它来帮助控制 wasm 在 js 环境中运行所必要的环境支持、内存控制、方法传递等，这个不必需的，除非你对 wasm 内容控制比较熟悉；
 2. [JS API](https://webassembly.org/getting-started/js-api/)，通过此 jsapi，可以直接引用 wasm Module，调用其中的方法。
 
 <img src="/img/wa/img2.jpg" style="width: 200px;"/>
 
 下面用 C 和 Assemblyscript 两种语言实际体验一下 WebAssembly 的编写和编译过程
 
-## C 编写 WebAssembly 
+## 五. C 编写 WebAssembly 
 
 以一个最简单的加法方法为例，编写 main.cpp 文件：
 
-```c
-int add (int x, int y) {
-   int res = x + y;
-   return res;
+```C
+#include <stdio.h>
+
+extern "C" {
+  int add (int x, int y) {
+    int res = x + y;
+    return res;
+  }
 }
 ```
 
 ### 编译
 
-[安装emscripten](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)。
-
-成功安装后，主要使用其中的 `emcc` 工具对上面编写的 main.cpp 文件进行编译：
+目前 C/C++ 配套的编译工具是 emscripten，在本地[安装编译环境](https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)后。使用其中的 `emcc` 工具对上面编写的 main.cpp 文件进行编译：
 
 ```bash
 $ CPP_FUNCS="['add']"
@@ -131,10 +191,81 @@ $ emcc ./main.cpp -o ./main_c.js -s WASM=1 \
 
 执行成功后，就会生成一个 `main_c.wasm` 文件和 `main_c.js` 脱水文件。
 
-### 胶水 js 文件
+> 这里需要注意的是，wasm 是编译后的产生，编译时的参数会直接影响结果，尤其重要，以上示例的参数不是一定的，而且 emcc 的参数繁多，针对特定的源码模块和使用场景都不一样，所以在使用之前一定即时查阅，这里就不再多说。
+
+### 胶水 js 代码
+
+先说一下为什么要用胶水代码。
+
+虽然 js 已经有 api 可以直接调用 wasm，但奈何 wasm 和 js 的体质相差太大，一个是很原始的二进制码，一个是明文的脚本，互相调用上存在不少的差异需要抹平，主要表现在内存控制上。
+
+js 没有能力去控制内存，是运行环境(如 V8 引擎)去管理。但 C/C++ 的内存管理需要去手动控制，包括申请、使用、释放等。还要支持与 js 的相互调用就需要两者的共享内存。
+
+被编译的 wasm 模块，对外暴露的不仅仅是你编写 `add` 方法，还包括一些如 _malloc、_memcpy、_free 基础内存控制方法。什么时候会用到这些方法呢？举个例子：
+
+在 js 中我们使用 object 等构造对象，可以很方便进行数据的读写操作，但是在如 C 的 low-level 语言中，只有基本类型可以直接操作，其它的高级类型因为是地址引用，无法直接操作，是通过指针(内存地址)操作。因为有这个差异，我们在 js 和 wasm 的相互调用中，对于引用类型的参数，不能直接使用，需要通过内存进行存取。
+
+这是一个比较繁杂的事，而且很容易出错，还好 emscripten 已经在编译产出中提供了一个胶水 js 代码，里面包含内存存取的 js 方法，具体的使用在下文中会介绍。
+
+### 页面中使用
+
+#### JSAPI
+
+加载 wasm 模块主要通过两个 JSAPI: 
+
+* `wa.instantiate(binary, deps)`：
+  * `binary` wasm 文件的二进制码，可以通过读取文件的 arrayBuffer 获取；
+* `wa.instantiateStreaming(response, deps)`
+  * `response` http response 对象，可以通过 fetch 接口获取，注意拉取的 wasm `Content-Type` 必须是 `application/wasm`，否则浏览器会直接拦截；
+
+返回标准 Promise 实例，resolve 一个 wasm module。
+
+#### 简单调用 wasm
+
+以 instantiateStreaming 为例：
+
+```js
+wa.instantiateStreaming(fetch("../out/main.wasm"), deps)
+  .then(res => {
+    const asmModule = res.instance.exports;
+    // 使用 add 方法
+    const val = asmModule.add(19, 23);
+    console.log(val);
+  }))
+  .catch(err => {});
+```
+#### 引用类型
+
+示例中的 `add (a: int, b: int): int` 传参和返回都是基本类型，如换成
+
+
+(未完待续)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 在页面中执行
-
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Table
 ### wasm 调用 js
 
 ### js 调用 wasm
@@ -162,7 +293,9 @@ $ emcc ./main.cpp -o ./main_c.js -s WASM=1 \
 
 ## 目前的问题
 
-
+1. wa 相关文档非常少，没有成熟案例参考，不好排坑；
+2. 上手难度较大，除编写 wasm 语言语法外，还要了解底层内存控制、相互调用地址计算等；
+3. 兼容性问题，
 
 
 
