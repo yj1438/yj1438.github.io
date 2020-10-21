@@ -75,29 +75,25 @@ demo 要突出 wasm 在逻辑运算上的优势，也要保证最终成果是落
 
 #### 灰度
 
-|平台|wasm|js|性能提升|
+| 平台|wasm|js|性能提升|
 | - | - | - | - |
-| pc chrome v69| 48ms | 1280ms | 26x |
+| pc chrome v72| 125ms | 1280ms | 10x |
 | android chrome v68 | 275ms | 7195ms | 26x |
 | ios v11.4 | 158ms | 2320ms | 14.68x |
-| alipay v10.1.35 android uc4_2.0 chrome v57| 9840ms | 18924ms | 1.92x |
-| alipay v10.1.35 ios v11.4 WKwebview| 156ms | 2400ms | 15.38x |
 
 #### 卡通画
 
-|平台|wasm|js|性能提升|
+| 平台|wasm|js|性能提升|
 | - | - | - | - |
-| pc chrome v69| 48ms | 1461ms | 26x |
-| android chrome v68 | 425ms | 7280ms | 26x |
-| ios v11.4 | 190ms | 2350ms | 14.68x |
-| alipay v10.1.35 android uc4_2.0 chrome v57| 9887ms | 34828ms | 1.92x |
-| alipay v10.1.35 android uc4_2.0 chrome v57 p20| 4790ms | 8240ms | 1.92x |
-| alipay v10.1.35 ios v11.4 WKwebview| 189ms | 2680ms | 15.38x |
+| pc chrome v69| 48ms | 1461ms | 30x |
+| pc chrome v72| 125ms | 1280ms | 10x |
+| android chrome v68 | 425ms | 7280ms | 17x |
+| ios v11.4 | 190ms | 2350ms | 12x |
 
 ### 结论
 
 如上数据统计，wa 的性能因根本体质的改变，在运行效率上有非常大的提升。
-在性能越好的平台优势越大，充分得用了平台的三件性能，包括内存存取和逻辑运算上。
+在性能越好的平台优势越大，充分利用了平台的硬件性能，包括内存存取和逻辑运算上。
 
 > 完整 demo 代码会在最后给出。
 
