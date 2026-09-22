@@ -1,59 +1,19 @@
-github: {
-    "version": {},
-    "author": "yinjie",
-    "hostname": "https://github.com/yj1438/",
-    "pages_hostname": "http://yj1438.github.io/"
-}
-#source: ./
-#destination: ./_site
-#plugins: ./_plugins
-safe: true
+# 站点配置 —— 2026-09 重启
+title: Yinjie 的博客
+description: >-
+  前端 / 工程化 / 随笔。博客于 2026 年 9 月重启，
+  2015–2018 的旧内容归档在 archive-2015-2018 分支。
+url: "https://yj1438.github.io"
+lang: zh-CN
 
-# Conversion
-#highlighter: pygments
-highlighter: rouge
+theme: minima
 
-gist:
-   noscript: false
+show_excerpts: true
 
-#markdown: rdiscount
-#rdiscount:
-#   extensions:
-#     - footnotes
 markdown: kramdown
-
 kramdown:
-    input: GFM
-    hard_wrap: false
-    math_engine: mathjax
-# kramdown:
-#   auto_ids:       true
-#   footnote_nr:    1
-#   entity_output:  as_char
-#   toc_levels:     1..6
-#   smart_quotes:   lsquo,rsquo,ldquo,rdquo
-#   enable_coderay: true
+  input: GFM
 
-#   coderay:
-#     coderay_wrap:              div
-#     coderay_line_numbers:      inline
-#     coderay_line_number_start: 1
-#     coderay_tab_width:         4
-#     coderay_bold_every:        10
-#     coderay_css:               style
-    
-lsi: false
-excerpt_separator: "\n\n\n\n"
-incremental: false
-
-# Serving
-detach: false
-port: 4000
-host: 0.0.0.0
-baseurl: "" # does not include hostname
-
-encoding: "utf-8"
-markdown_ext: markdown,mkd,mkdn,md
-
-#plugins
-#gems: [jekyll-less]
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag

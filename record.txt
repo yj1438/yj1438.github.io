@@ -1,2 +1,0 @@
-simple node server
-webpack-hot-server + proxy
