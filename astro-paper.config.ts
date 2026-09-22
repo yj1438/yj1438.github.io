@@ -9,7 +9,7 @@ export default defineAstroPaperConfig({
     profile: "https://github.com/yj1438",
     ogImage: "default-og.jpg",
     // Google Search Console 验证（HTML 文件 + meta 双保险）
-    googleVerification: "google6bfff8cdc7cee6a4",
+    googleVerification: "XEt_kkEsz1lJu4OCGDi_mvI6_r6YLHg0YBHqi-T4eik",
     lang: "zh",
     timezone: "Asia/Shanghai",
     dir: "ltr",
