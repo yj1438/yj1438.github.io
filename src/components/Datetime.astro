@@ -33,7 +33,11 @@ const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
   postTimezone ?? config.site.timezone
 );
 
-const date = datetime.format("D MMM, YYYY");
+// 中文环境使用本地化日期格式，其他语言保持模板默认
+const date =
+  config.site.lang === "zh"
+    ? datetime.format("YYYY年M月D日")
+    : datetime.format("D MMM, YYYY");
 ---
 
 <div
