@@ -8,6 +8,8 @@ export default defineAstroPaperConfig({
     author: "Yinjie",
     profile: "https://github.com/yj1438",
     ogImage: "default-og.jpg",
+    // Google Search Console 验证（HTML 文件 + meta 双保险）
+    googleVerification: "google6bfff8cdc7cee6a4",
     lang: "zh",
     timezone: "Asia/Shanghai",
     dir: "ltr",
@@ -19,8 +21,7 @@ export default defineAstroPaperConfig({
   },
   features: {
     lightAndDarkMode: true,
-    // satori 生成动态 OG 图的默认字体不含中文字形，先关闭，后续可换字体再开
-    dynamicOgImage: false,
+    dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
     editPost: {

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://yj1438.github.io/sitemap-index.xml
