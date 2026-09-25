@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLM-5.3-FLASH × 3 Harness 横评 · 在线 Demo</title>
+<meta name="description" content="同一个 GLM-5.3-FLASH 模型，ChatGPT 桌面版 / Claude Code / ZCode 三个 harness 的横评产物在线试玩：鹈鹕骑车动画 SVG 与 WebGL2 黑洞实时渲染。">
+<style>
+  :root { color-scheme: dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a12; color: #e8e8f0; min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    padding: 3rem 1.5rem 5rem;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 3.5rem; }
+  header h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: 0.02em; }
+  header h1 em { font-style: normal; color: #f5a623; }
+  header p { margin-top: 0.9rem; color: #9a9ab0; font-size: 0.95rem; line-height: 1.7; }
+  header p a { color: #7ab8ff; text-decoration: none; }
+  header p a:hover { text-decoration: underline; }
+  h2.section {
+    margin: 2.5rem 0 1.2rem; font-size: 1.15rem; color: #cfcfe0;
+    border-left: 3px solid #f5a623; padding-left: 0.7rem;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+  a.card {
+    display: block; text-decoration: none; color: inherit;
+    background: #14141f; border: 1px solid #26263a; border-radius: 14px;
+    overflow: hidden; transition: transform .18s ease, border-color .18s ease;
+  }
+  a.card:hover { transform: translateY(-3px); border-color: #f5a62366; }
+  .thumb { height: 170px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .thumb svg, .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+  .thumb.bh-gpt  { background: radial-gradient(ellipse 60% 45% at 50% 62%, #c8a24a33 0%, transparent 70%), radial-gradient(circle 34px at 50% 58%, #000 98%, #e8c47a 100%, transparent 102%), linear-gradient(#0d0d18, #0d0d18); }
+  .thumb.bh-cc   { background: radial-gradient(ellipse 65% 40% at 50% 60%, #d8b46a30 0%, transparent 70%), radial-gradient(circle 36px at 50% 56%, #000 97%, #f0d9a0 100%, transparent 101%), linear-gradient(#0d0d18, #0d0d18); }
+  .thumb.bh-zai  { background: radial-gradient(ellipse 62% 48% at 50% 58%, #b07ac833 0%, transparent 72%), radial-gradient(circle 35px at 50% 55%, #000 98%, #f0e0b8 100%, transparent 102%), linear-gradient(#0d0d18, #0d0d18); }
+  .card-body { padding: 1rem 1.1rem 1.15rem; }
+  .card-body h3 { font-size: 1.02rem; margin-bottom: 0.45rem; }
+  .card-body h3 .app { color: #f5a623; }
+  .card-body p { font-size: 0.85rem; color: #9a9ab0; line-height: 1.65; }
+  .meta { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+  .meta span {
+    font-size: 0.75rem; padding: 0.22rem 0.6rem; border-radius: 999px;
+    background: #1e1e2e; color: #b8b8cc; border: 1px solid #2c2c44;
+  }
+  .meta span.time { color: #f5c86a; border-color: #4a3c1e; }
+  footer { margin-top: 4rem; text-align: center; color: #6a6a80; font-size: 0.82rem; line-height: 1.8; }
+  footer a { color: #7ab8ff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>同一个 <em>GLM-5.3-FLASH</em>，三种 harness</h1>
+    <p>ChatGPT 桌面版 · Claude Code · ZCode —— 两个任务的全部产物，均为零依赖单文件，可直接在线试玩。<br>
+    实验设计与完整分析见博客文章<a href="https://yj1438.github.io/posts/glm-53-flash-three-harnesses/">《GLM-5.3-FLASH 最佳 agent？—— 同一模型，三个 harness 的实测》</a></p>
+  </header>
+
+  <h2 class="section">任务一：鹈鹕骑车（动画 SVG）</h2>
+  <div class="grid">
+    <a class="card" href="/demos/pelican-gpt.svg">
+      <div class="thumb"><img src="/demos/pelican-gpt.svg" alt="GPT 产的鹈鹕骑车动画"></div>
+      <div class="card-body">
+        <h3><span class="app">ChatGPT 桌面版</span> · 鹈鹕骑车</h3>
+        <p>17 处 SMIL 动画：车轮辐条旋转、地面滚动、云朵漂移，最快交付。</p>
+        <div class="meta"><span class="time">⏱ 7m 30s</span><span>10.0 KB</span></div>
+      </div>
+    </a>
+    <a class="card" href="/demos/pelican-cc.svg">
+      <div class="thumb"><img src="/demos/pelican-cc.svg" alt="Claude Code 产的鹈鹕骑车动画"></div>
+      <div class="card-body">
+        <h3><span class="app">Claude Code</span> · 鹈鹕骑车</h3>
+        <p>腿部用路径形变（d 插值）蹬踏板，速度线用 stroke-dashoffset，工程感强。</p>
+        <div class="meta"><span class="time">⏱ 11m 20s</span><span>10.4 KB</span></div>
+      </div>
+    </a>
+    <a class="card" href="/demos/pelican-zai.svg">
+      <div class="thumb"><img src="/demos/pelican-zai.svg" alt="ZCode 产的鹈鹕骑车动画"></div>
+      <div class="card-body">
+        <h3><span class="app">ZCode</span> · 鹈鹕骑车</h3>
+        <p>细节最丰富：眨眼、太阳 60s 自转、全贝塞尔缓动，且唯一保留无障碍标注。</p>
+        <div class="meta"><span class="time">⏱ 28m 0s</span><span>14.2 KB</span></div>
+      </div>
+    </a>
+  </div>
+
+  <h2 class="section">任务二：H5 黑洞（WebGL2 实时渲染）</h2>
+  <div class="grid">
+    <a class="card" href="/demos/blackhole-gpt.html">
+      <div class="thumb bh-gpt"></div>
+      <div class="card-body">
+        <h3><span class="app">ChatGPT 桌面版</span> · GARGANTUA</h3>
+        <p>450 行 / 23 个 uniform。加载文案：「正在弯曲时空 ...」</p>
+        <div class="meta"><span class="time">⏱ 14m 3s</span><span>23.9 KB</span></div>
+      </div>
+    </a>
+    <a class="card" href="/demos/blackhole-cc.html">
+      <div class="thumb bh-cc"></div>
+      <div class="card-body">
+        <h3><span class="app">Claude Code</span> · GARGANTUA 黑洞</h3>
+        <p>515 行 / ACES 色调映射 / 动态分辨率。加载圈画成了光子环。</p>
+        <div class="meta"><span class="time">⏱ 21m 21s</span><span>27.6 KB</span></div>
+      </div>
+    </a>
+    <a class="card" href="/demos/blackhole-zai.html">
+      <div class="thumb bh-zai"></div>
+      <div class="card-body">
+        <h3><span class="app">ZCode</span> · 黑洞 SINGULARITY</h3>
+        <p>703 行 / 35 个 uniform，附「你在看什么」物理科普面板。</p>
+        <div class="meta"><span class="time">⏱ 25m 49s</span><span>29.4 KB</span></div>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    同一台机器 · 2026-09-25 凌晨连续完成 · 模型均为 GLM-5.3-FLASH<br>
+    <a href="https://yj1438.github.io">← 回博客</a>
+  </footer>
+</div>
+</body>
+</html>
