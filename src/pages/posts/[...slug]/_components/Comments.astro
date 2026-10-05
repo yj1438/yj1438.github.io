@@ -1,0 +1,89 @@
+---
+/**
+ * giscus 评论组件（基于 GitHub Discussions，免费无服务器）。
+ *
+ * 配置步骤见 https://giscus.app/zh-CN ：
+ * 1. 仓库 Settings → General → Features 勾选 Discussions；
+ * 2. 安装 giscus App（https://github.com/apps/giscus）并授权本仓库；
+ * 3. Discussions → Categories 新建一个「Announcements」类型的分类（如 "Comments"）；
+ * 4. 打开 giscus.app 填入仓库，选择该分类，把生成的 repoId / categoryId
+ *    填到下方配置，并将 enabled 改为 true。
+ */
+const giscusConfig = {
+  enabled: true,
+  repo: "yj1438/yj1438.github.io",
+  repoId: "MDEwOlJlcG9zaXRvcnk0MTI5NTMxMQ==",
+  category: "Announcements",
+  categoryId: "DIC_kwDOAnYdz84DHFhI",
+  mapping: "pathname",
+  reactionsEnabled: "1",
+  inputPosition: "top",
+  lang: "zh-CN",
+};
+
+const show =
+  giscusConfig.enabled && giscusConfig.repoId !== "" && giscusConfig.categoryId !== "";
+---
+
+{
+  show && (
+    <section id="comments" class="mt-8">
+      <h2 class="text-accent inline-block text-xl font-bold sm:text-2xl">
+        评论
+      </h2>
+      <div id="giscus-container" class="mt-4" />
+    </section>
+  )
+}
+
+<script is:inline data-astro-rerun define:vars={{ giscusConfig }}>
+  (function () {
+    const container = document.getElementById("giscus-container");
+    if (!container) return;
+
+    const currentTheme = () =>
+      document.documentElement.getAttribute("data-theme") === "dark"
+        ? "dark"
+        : "light";
+
+    function loadGiscus() {
+      // View Transitions 返回文章页时会重跑本脚本，先清空避免重复 iframe。
+      container.innerHTML = "";
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.setAttribute("data-repo", giscusConfig.repo);
+      script.setAttribute("data-repo-id", giscusConfig.repoId);
+      script.setAttribute("data-category", giscusConfig.category);
+      script.setAttribute("data-category-id", giscusConfig.categoryId);
+      script.setAttribute("data-mapping", giscusConfig.mapping);
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", giscusConfig.reactionsEnabled);
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", giscusConfig.inputPosition);
+      script.setAttribute("data-theme", currentTheme());
+      script.setAttribute("data-lang", giscusConfig.lang);
+      container.appendChild(script);
+    }
+
+    loadGiscus();
+
+    // 跟随 astro-paper 的明暗主题切换（html data-theme 属性变化）。
+    if (!window.__giscusThemeObserver) {
+      const observer = new MutationObserver(() => {
+        document
+          .querySelector("iframe.giscus-frame")
+          ?.contentWindow?.postMessage(
+            { giscus: { setConfig: { theme: currentTheme() } } },
+            "https://giscus.app"
+          );
+      });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"],
+      });
+      window.__giscusThemeObserver = observer;
+    }
+  })();
+</script>

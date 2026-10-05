@@ -24,6 +24,10 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+
+// Cloudflare Web Analytics 的 beacon token（页面源码公开可见，非秘密）。
+// 从 https://dash.cloudflare.com → Analytics & Logs → Web Analytics 获取。
+const CLOUDFLARE_BEACON_TOKEN = "5f897c1fba8b4b75aa70fbebcf09d0d7";
 const rssHref = getRelativeLocaleUrl(
   Astro.currentLocale ?? config.site.lang,
   "rss.xml"
@@ -82,6 +86,20 @@ const rssHref = getRelativeLocaleUrl(
 
     <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
+
+    {
+      /* Cloudflare Web Analytics：免费无流量上限。
+         在 https://dash.cloudflare.com → Analytics & Logs → Web Analytics
+         添加站点后，把生成的 token 填入下方 CLOUDFLARE_BEACON_TOKEN */
+      CLOUDFLARE_BEACON_TOKEN && (
+        <script
+          is:inline
+          type="module"
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: CLOUDFLARE_BEACON_TOKEN })}
+        />
+      )
+    }
 
     <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />
