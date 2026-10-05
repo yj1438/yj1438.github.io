@@ -62,11 +62,28 @@ export default defineConfig({
     {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",
-      provider: fontProviders.google(),
+      // 本地 provider：字体文件随仓库分发，构建不依赖访问 Google Fonts
+      //（来源：@fontsource-variable/google-sans-code@5.3.1，latin 字符集，wght 300-800 可变字重）
+      provider: fontProviders.local(),
       fallbacks: ["monospace"],
-      weights: [300, 400, 500, 600, 700],
-      styles: ["normal", "italic"],
-      formats: ["woff", "ttf"],
+      options: {
+        variants: [
+          {
+            weight: "300 800",
+            style: "normal",
+            src: [
+              "./src/assets/fonts/google-sans-code-latin-wght-normal.woff2",
+            ],
+          },
+          {
+            weight: "300 800",
+            style: "italic",
+            src: [
+              "./src/assets/fonts/google-sans-code-latin-wght-italic.woff2",
+            ],
+          },
+        ],
+      },
     },
   ],
   env: {
