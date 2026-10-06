@@ -10,7 +10,7 @@ tags:
   - 排查
 ---
 
-> 记录时间：2026-09-30 ｜ 环境：macOS + Claude Code（CodeFuse 托管版 2.1.258）+ 智谱 GLM 网关
+> 记录时间：2026-09-30 ｜ 环境：macOS + Claude Code（托管分发版 2.1.258）+ 智谱 GLM 网关
 
 **TL;DR**：`~/.claude/settings.json` 里一行 `"ENABLE_TOOL_SEARCH": "true"`，叠加 `ANTHROPIC_BASE_URL` 指向第三方网关（智谱 GLM），导致会话中 Bash、Read、Write 等内置工具全部消失。删除该变量即恢复，无需重开会话。官方本来针对第三方端点做了**自动关闭 tool search 的安全回退**，显式 `true` 会把它覆盖掉——等于亲手拆掉保护。
 
@@ -64,13 +64,13 @@ ToolSearch("fetch|web|http|url")
 
 ```text
 $ ps aux | grep -iE "claude" | grep -v grep
-yinjie  82447  ... /Users/yinjie/.codefuse/fuse/engine/bin/claude/2.1.258/claude
+yinjie  82447  ... /Users/yinjie/opt/claude-managed/2.1.258/claude
 yinjie  61255  ... claude --permission-mode bypassPermissions --session-id ...
 yinjie  97322  ... /Users/yinjie/.local/bin/claude --permission-mode bypassPermissions ...
 yinjie  24999  ... claude --settings {"env":{"ANTHROPIC_BASE_URL":"http://127.0.0.1:9877", ...}}
 ```
 
-发现两类事实：① 机器上官方 CLI 与 CodeFuse 托管二进制混用；② 所有会话都没有 `--disallowedTools` 之类的裁剪参数。一度怀疑是托管版裁剪了工具——后来证明**与二进制无关**。
+发现两类事实：① 机器上官方 CLI 与托管分发版二进制混用；② 所有会话都没有 `--disallowedTools` 之类的裁剪参数。一度怀疑是托管版裁剪了工具——后来证明**与二进制无关**。
 
 **排查 2：各级 settings 是否 deny 了工具？——排除**
 
