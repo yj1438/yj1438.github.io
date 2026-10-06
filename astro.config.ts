@@ -25,7 +25,10 @@ export default defineConfig({
     mdx(),
     sitemap({
       filter: page =>
-        config.features?.showArchives !== false || !page.endsWith("/archives/"),
+        (config.features?.showArchives !== false ||
+          !page.endsWith("/archives/")) &&
+        // 搜索页是纯客户端渲染，无索引价值
+        !page.endsWith("/search/"),
     }),
   ],
   i18n: {
