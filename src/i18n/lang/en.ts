@@ -39,7 +39,7 @@ export default {
   },
   pages: {
     tagTitle: "Tag",
-    tagDesc: "All the articles with the tag",
+    tagDesc: "All the articles with the tag {{tag}}.",
 
     tagsTitle: "Tags",
     tagsDesc: "All the tags used in posts.",

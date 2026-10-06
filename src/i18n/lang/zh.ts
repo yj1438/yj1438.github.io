@@ -39,16 +39,16 @@ export default {
   },
   pages: {
     tagTitle: "标签",
-    tagDesc: "该标签下的所有文章",
+    tagDesc: "标签「{{tag}}」下的全部文章。",
 
     tagsTitle: "标签",
-    tagsDesc: "文章中使用的所有标签。",
+    tagsDesc: "按标签浏览全部文章：Claude Code、Rust、Tauri、终端、AI Agent 等主题。",
 
     postsTitle: "文章",
-    postsDesc: "我发布的所有文章。",
+    postsDesc: "全部文章列表：前端、工程化、AI Agent、Rust、桌面开发的技术实践与踩坑记录。",
 
     archivesTitle: "归档",
-    archivesDesc: "所有归档的文章。",
+    archivesDesc: "全部文章的时间线归档，按年份浏览所有发布过的内容。",
 
     searchTitle: "搜索",
     searchDesc: "搜索任意文章……",
