@@ -1,6 +1,6 @@
 ---
 title: pbcopy 说成功，中文却丢了：ReSession macOS 排查记
-pubDatetime: 2026-10-17T17:00:00+08:00
+pubDatetime: 2026-10-17T15:30:00+08:00
 description: macOS 上从 ReSession 终端复制中文始终为空，而 pbcopy 的退出码是 0。一次关于 locale、GUI 进程环境与两条复制路径的排查，以及「成功退出码 ≠ 语义成功」的教训。
 featured: true
 tags:
