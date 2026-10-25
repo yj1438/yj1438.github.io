@@ -4,7 +4,7 @@ export default defineAstroPaperConfig({
   site: {
     url: "https://yj1438.github.io",
     title: "Yinjie 的博客",
-    description: "前端 / 工程化 / 随笔，记录与思考。",
+    description: "记录 AI Coding 的实践与思考：Agent CLI、工具链与工作流。",
     author: "Yinjie",
     profile: "https://github.com/yj1438",
     ogImage: "default-og.jpg",
