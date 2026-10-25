@@ -8,6 +8,7 @@ https://yj1438.github.io/posts/codex-multiple-providers/
 https://yj1438.github.io/posts/conpty-pitfalls-embedded-terminal/
 https://yj1438.github.io/posts/dual-marketplace-agent-skills/
 https://yj1438.github.io/posts/enable-tool-search-gateway-pitfall/
+https://yj1438.github.io/posts/framecraft-video-pipeline/
 https://yj1438.github.io/posts/glm-53-flash-three-harnesses/
 https://yj1438.github.io/posts/macos-pbcopy-utf8-pitfall/
 https://yj1438.github.io/posts/resession-claude-code-session-manager/
@@ -28,12 +29,14 @@ https://yj1438.github.io/tags/tauri/
 https://yj1438.github.io/tags/tmux/
 https://yj1438.github.io/tags/windows/
 https://yj1438.github.io/tags/zcode/
+https://yj1438.github.io/tags/工作流/
 https://yj1438.github.io/tags/排查/
 https://yj1438.github.io/tags/插件开发/
 https://yj1438.github.io/tags/架构设计/
 https://yj1438.github.io/tags/桌面开发/
 https://yj1438.github.io/tags/横评/
 https://yj1438.github.io/tags/终端/
+https://yj1438.github.io/tags/视频工程/
 https://yj1438.github.io/tags/踩坑/
 https://yj1438.github.io/tags/配置/
 https://yj1438.github.io/tags/随笔/
