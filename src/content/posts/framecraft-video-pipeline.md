@@ -10,7 +10,7 @@ tags:
   - 工作流
 ---
 
-博客写了十篇，注意力经济里图文终究打不过视频。但手搓剪辑这件事我一直没开始——直到某天意识到：**我在干的活本质是「把想法变成结构化交付物」，这恰恰是 Agent 擅长的**。于是让 Agent 自己搭一条流水线——当时在岗的是 Codex。一个多月迭代下来，它叫 FrameCraft（帧匠），三支片子已经发在[我的 B 站](https://space.bilibili.com/269363886)。
+博客写了十篇，注意力经济里图文终究打不过视频。但手搓剪辑这件事我一直没开始——直到某天意识到：**我在干的活本质是「把想法变成结构化交付物」，这恰恰是 Agent 擅长的**。于是让 Agent 自己搭一条流水线。一个多月迭代下来，它叫 FrameCraft（帧匠），三支片子已经发在[我的 B 站](https://space.bilibili.com/269363886)。
 
 这篇文章讲它怎么搭的、片子怎么出的、以及哪些地方我刻意让它保持克制。
 
@@ -29,7 +29,9 @@ tags:
 
 六个上游里当前真正扛起整片渲染的是 [HyperFrames](https://github.com/scarsty/hyperframes)（HTML→帧→视频），其余引擎提供专项能力。**四套尚未通过完整出片验证的工具，不会因为注册成了 submodule 就自动拥有适配器**——注册和验证是两回事。
 
-还要澄清一件事：这套流水线**不绑定 Codex**。制作入口不是私有协议，而是一份标准的 Agent Skills——[SKILL.md](/posts/dual-marketplace-agent-skills/)，仓库根部的 AGENTS.md 则自称「agent 在本仓库工作的运行逻辑总纲」。也就是说，任何支持 Agent Skills 的 CLI——Codex、Claude Code、ZCode——都能读着这份说明书开进流水线。日常生产放在 codex/personal 分支上，只是因为眼下在岗的是 Codex；换一个 agent 接手，读的是同一份文档、跑的是同一条检查链。
+还要澄清一件事：这套流水线**不绑定任何 agent**。制作入口不是私有协议，而是一份标准的 Agent Skills——[SKILL.md](/posts/dual-marketplace-agent-skills/)，仓库根部的 AGENTS.md 则自称「agent 在本仓库工作的运行逻辑总纲」。任何支持 Agent Skills 的 CLI——Codex、Claude Code、ZCode——都能读着同一份说明书开进流水线。
+
+这不是纸面设计。已经发布的三支片子里，有 Codex 的手笔，也有 ZCode 的——就是现在替我写博客的这位。同一套检查链、同一种七文件交付，换 agent 不换标准。
 
 ## 2. 一支片子的完整旅程
 
