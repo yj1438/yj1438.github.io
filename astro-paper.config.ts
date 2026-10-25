@@ -30,7 +30,14 @@ export default defineAstroPaperConfig({
     },
     search: "pagefind",
   },
-  socials: [{ name: "github", url: "https://github.com/yj1438" }],
+  socials: [
+    { name: "github", url: "https://github.com/yj1438" },
+    {
+      name: "bilibili",
+      url: "https://space.bilibili.com/269363886",
+      linkTitle: "Yinjie 的哔哩哔哩主页",
+    },
+  ],
   shareLinks: [
     { name: "x", url: "https://x.com/intent/post?url=" },
     { name: "telegram", url: "https://t.me/share/url?url=" },
